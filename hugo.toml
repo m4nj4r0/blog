@@ -30,3 +30,7 @@ title = "Manjaro"
     name = "Tags"
     url = "/tags/"
     weight = 2
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
