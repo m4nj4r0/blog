@@ -7,7 +7,7 @@ theme = "gokarna"
 title = "Manjaro"
 
 [params]
-  avatarURL = "/images/avatar.png"
+  avatarURL = "/blog/images/avatar.png"
 
   description = "Posts about binary exploitation."
 

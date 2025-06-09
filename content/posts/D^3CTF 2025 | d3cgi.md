@@ -326,7 +326,7 @@ dummy_request()
 ```
 I used the first dummy request to trigger allocations and frees, and the second one to pause at `FCGX_GetChar` for inspecting the heap.  
 
-![heap](/images/d3cgi/heap.png)  
+![heap](/blog/images/d3cgi/heap.png)  
 
 In the attack function, I first filled a large freed chunk, and then implemented the exploitation idea as described earlier.
 
