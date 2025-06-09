@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Manjaro</title>
-    <link>https://example.org/</link>
+    <link>https://m4nj4r0.github.io/blog/</link>
     <description>Recent content on Manjaro</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 02 Jun 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://m4nj4r0.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>D^3CTF 2025 | d3cgi</title>
-      <link>https://example.org/posts/d3ctf-2025--d3cgi/</link>
+      <link>https://m4nj4r0.github.io/blog/posts/d3ctf-2025--d3cgi/</link>
       <pubDate>Mon, 02 Jun 2025 00:12:54 +0200</pubDate>
-      <guid>https://example.org/posts/d3ctf-2025--d3cgi/</guid>
+      <guid>https://m4nj4r0.github.io/blog/posts/d3ctf-2025--d3cgi/</guid>
       <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;A few days ago, I played &lt;strong&gt;D^3CTF 2025&lt;/strong&gt; to try out some medium and hard PWN challenges.&lt;br&gt;&#xA;This was the only challenge I managed to solve, and I believe it was the easiest one.&lt;br&gt;&#xA;It was a fun challenge to solve and a valuable experience, as it involved a real-world vulnerability.&lt;/p&gt;&#xA;&lt;p&gt;The challenge comes with a &lt;code&gt;challenge&lt;/code&gt; binary, a &lt;code&gt;lighttpd&lt;/code&gt; binary, a &lt;code&gt;libs/&lt;/code&gt; directory, &lt;code&gt;lighttpd.conf&lt;/code&gt;, a &lt;code&gt;Dockerfile&lt;/code&gt;,&#xA;and some shell scripts to simplify setup in a Docker container.&lt;br&gt;&#xA;The &lt;code&gt;challenge&lt;/code&gt; binary is a CGI application served over the web using the Lighttpd web server.&lt;br&gt;&#xA;Here&amp;rsquo;s the checksec output for the &lt;code&gt;challenge&lt;/code&gt; binary:&lt;/p&gt;</description>
     </item>
   </channel>

@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Manjaro</title>
-    <link>https://example.org/tags/</link>
+    <link>https://m4nj4r0.github.io/blog/tags/</link>
     <description>Recent content in Tags on Manjaro</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 02 Jun 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://m4nj4r0.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Cgi</title>
-      <link>https://example.org/tags/cgi/</link>
+      <link>https://m4nj4r0.github.io/blog/tags/cgi/</link>
       <pubDate>Mon, 02 Jun 2025 00:12:54 +0200</pubDate>
-      <guid>https://example.org/tags/cgi/</guid>
+      <guid>https://m4nj4r0.github.io/blog/tags/cgi/</guid>
       <description></description>
     </item>
     <item>
       <title>Pwn</title>
-      <link>https://example.org/tags/pwn/</link>
+      <link>https://m4nj4r0.github.io/blog/tags/pwn/</link>
       <pubDate>Mon, 02 Jun 2025 00:12:54 +0200</pubDate>
-      <guid>https://example.org/tags/pwn/</guid>
+      <guid>https://m4nj4r0.github.io/blog/tags/pwn/</guid>
       <description></description>
     </item>
     <item>
       <title>Writeup</title>
-      <link>https://example.org/tags/writeup/</link>
+      <link>https://m4nj4r0.github.io/blog/tags/writeup/</link>
       <pubDate>Mon, 02 Jun 2025 00:12:54 +0200</pubDate>
-      <guid>https://example.org/tags/writeup/</guid>
+      <guid>https://m4nj4r0.github.io/blog/tags/writeup/</guid>
       <description></description>
     </item>
   </channel>
