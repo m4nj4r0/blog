@@ -27,10 +27,6 @@ defaults:
   run:
     shell: bash
 
-caches:
-  images:
-    dir: :cacheDir/images
-
 jobs:
   # Build job
   build:
