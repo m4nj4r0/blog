@@ -411,4 +411,4 @@ ctf{fake_flag_for_testing}
 I recommend reading the [PoC](https://www.synacktiv.com/en/publications/cve-2025-23016-exploiting-the-fastcgi-library) if you want more details about exploiting this vulnerability.  
 I also believe this challenge was heavily inspired by that PoC, as the binary is quite similar to the one used in their demonstration.
 
-You can check out the full exploit here: [exploit.py](/scripts/d3cgi/exploit.py)
+You can check out the full exploit here: [exploit.py](/blog/scripts/d3cgi/exploit.py)
