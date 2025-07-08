@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rev on Manjaro</title>
+    <link>https://m4nj4r0.github.io/blog/tags/rev/</link>
+    <description>Recent content in Rev on Manjaro</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 30 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://m4nj4r0.github.io/blog/tags/rev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GoogleCTF 2025 | multiarch</title>
+      <link>https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/</link>
+      <pubDate>Sun, 29 Jun 2025 23:55:07 +0200</pubDate>
+      <guid>https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;This weekend, I played GoogleCTF to try out some of the challenges, since this CTF is highly rated on CTFTime.&#xA;The first challenges I solved were multiarch part 1 &amp;amp; 2, which I found to be the most interesting,&#xA;even though they were relatively easy compared to the rest of the CTF.&lt;/p&gt;&#xA;&lt;p&gt;First part was a reverse engineering challenge, which isn’t my main category, but I do it because binary exploitation&#xA;usually requires some reversing in almost every challenge. This time, it was impossible for me to do the binary exploitation part without&#xA;reversing it first. The binary was a &amp;ldquo;virtual machine&amp;rdquo;-type challenge — an interpreter for custom bytecode provided with the challenge&#xA;in a file called &lt;code&gt;crackme.masm&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
