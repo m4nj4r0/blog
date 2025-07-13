@@ -2,28 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/</loc>
-    <lastmod>2025-06-30T00:00:00+00:00</lastmod>
+    <loc>https://m4nj4r0.github.io/blog/posts/l3akctf-2025--pwn/</loc>
+    <lastmod>2025-07-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://m4nj4r0.github.io/blog/</loc>
-    <lastmod>2025-06-30T00:00:00+00:00</lastmod>
+    <lastmod>2025-07-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://m4nj4r0.github.io/blog/posts/</loc>
-    <lastmod>2025-06-30T00:00:00+00:00</lastmod>
+    <lastmod>2025-07-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://m4nj4r0.github.io/blog/tags/pwn/</loc>
+    <lastmod>2025-07-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://m4nj4r0.github.io/blog/tags/</loc>
+    <lastmod>2025-07-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://m4nj4r0.github.io/blog/tags/writeup/</loc>
+    <lastmod>2025-07-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/</loc>
     <lastmod>2025-06-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://m4nj4r0.github.io/blog/tags/rev/</loc>
     <lastmod>2025-06-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://m4nj4r0.github.io/blog/tags/</loc>
-    <lastmod>2025-06-30T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://m4nj4r0.github.io/blog/tags/vm/</loc>
-    <lastmod>2025-06-30T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://m4nj4r0.github.io/blog/tags/writeup/</loc>
     <lastmod>2025-06-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://m4nj4r0.github.io/blog/tags/cgi/</loc>

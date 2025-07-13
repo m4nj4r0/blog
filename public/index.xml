@@ -6,8 +6,15 @@
     <description>Recent content on Manjaro</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 30 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Jul 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://m4nj4r0.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>L3akCTF 2025 | PWN</title>
+      <link>https://m4nj4r0.github.io/blog/posts/l3akctf-2025--pwn/</link>
+      <pubDate>Sun, 13 Jul 2025 12:17:38 +0200</pubDate>
+      <guid>https://m4nj4r0.github.io/blog/posts/l3akctf-2025--pwn/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://m4nj4r0.github.io/blog/images/l3ak25/l3ak.png&#34; alt=&#34;stack&#34;&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;&#xA;&lt;p&gt;This weekend, I played L3ak CTF. Since my team didn’t participate, I created an account to play individually, focusing on solving only the PWN challenges. The difficulty of the challenges ranged from easy to hard, but on average, I would say they were of medium difficulty (considering only the PWN challenges). I managed to solve all of them during the CTF, and I have to say — they turned out to be more fun than I expected.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>GoogleCTF 2025 | multiarch</title>
       <link>https://m4nj4r0.github.io/blog/posts/googlectf-2025--multiarch/</link>

